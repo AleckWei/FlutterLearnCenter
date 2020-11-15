@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '01-praticeMain/01-LayoutPractise.dart';
-import '01-praticeMain/HelloWorld.dart';
-
-void main() {
-  // runApp(LayoutPractise());
-  runApp(HelloWorld());
-}
-
-class MyApp extends StatelessWidget {
+class LayoutPractise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget titleSection = new Container(
