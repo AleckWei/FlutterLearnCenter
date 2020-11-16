@@ -15,10 +15,7 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingTop = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    final paddingTop = MediaQuery.of(context).padding.top;
 
     return Container(
       height: 56.0 + paddingTop,
@@ -31,12 +28,14 @@ class MyAppBar extends StatelessWidget {
             icon: Icon(Icons.menu),
             tooltip: '导航菜单',
             onPressed: null,
+            color: Colors.white,
           ),
           Expanded(child: title),
           IconButton(
             icon: Icon(Icons.search),
             tooltip: '搜索',
             onPressed: null,
+            color: Colors.white,
           ),
         ],
       ),
@@ -53,10 +52,7 @@ class MyScaffold extends StatelessWidget {
           MyAppBar(
             title: Text(
               '样例的标题',
-              style: Theme
-                  .of(context)
-                  .primaryTextTheme
-                  .headline6,
+              style: Theme.of(context).primaryTextTheme.headline6,
             ),
           ),
           Expanded(
