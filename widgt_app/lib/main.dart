@@ -5,7 +5,7 @@ import '01-praticeMain/HelloWorld.dart';
 
 void main() {
   // runApp(LayoutPractise());
-  runApp(HelloWorld());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
