@@ -38,11 +38,12 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          new Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          new Text('41'),
+          // new Icon(
+          //   Icons.star,
+          //   color: Colors.red[500],
+          // ),
+          // new Text('41'),
+          FavoriteWidget(),
         ],
       ),
     );
@@ -111,31 +112,75 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Flutter布局样例'),
         ),
-        body: SingleChildScrollView(
+        body: ListView(
           // 由于呈现的内容有可能会超过手机屏幕的长度
-          // 这里就把主体内容放进一个ScrollView里面
-          child: ConstrainedBox(
-            constraints: new BoxConstraints(
-              minHeight: 120.0,
+          // 这里就把主体内容放进一个ListView里面
+          children: [
+            Image.asset(
+              'images/lake.jpg',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
             ),
-            child: Column(
-              children: [
-                Image.asset(
-                  'images/lake.jpg',
-                  width: 600,
-                  height: 240,
-                  fit: BoxFit.cover,
-                ),
-                titleSection,
-                buttonSection,
-                textSection,
-              ],
-            ),
-          ),
+            titleSection,
+            buttonSection,
+            textSection,
+          ],
         ),
       ),
-
-      // resizeToAvoidBottomPadding: false,
     );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _FavoriteWidgetState();
+  // 上面这种写法等价于：
+  // State<StatefulWidget> createState(){
+  //   return _FavoriteWidgetState();
+  // }
+  // 证明箭头函数自动帮我们封装了return了。
+
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            padding: EdgeInsets.all(0),
+            alignment: Alignment.centerRight,
+            icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+            color: Colors.red[500],
+            onPressed: _toggleFavorite,
+          ),
+        ),
+        SizedBox(
+          width: 18,
+          child: Container(
+            child: Text('$_favoriteCount'),
+          ),
+        )
+      ],
+    );
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _favoriteCount -= 1;
+        _isFavorited = false;
+      } else {
+        _favoriteCount += 1;
+        _isFavorited = true;
+      }
+    });
   }
 }
