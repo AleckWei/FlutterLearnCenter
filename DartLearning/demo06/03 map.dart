@@ -34,7 +34,7 @@ main(List<String> args) {
     "work":["敲代码","送外卖"],
     "height":178
   });
-  print(person['work'].toList());
+  print(person['work']);
 
   print(m);
 
