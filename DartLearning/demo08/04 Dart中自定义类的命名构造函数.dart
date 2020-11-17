@@ -1,5 +1,3 @@
-import '02 Dart中创建义类 使用类.dart';
-
 class Person{
   // 类的名称首字母要大写！
   String name = 'wwj';

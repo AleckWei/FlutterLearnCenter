@@ -1,5 +1,3 @@
-import '01 方法的定义 变量 方法的作用域.dart';
-
 main(List<String> args) {
   // sumNum(int n){
   //   var sum = 0;
