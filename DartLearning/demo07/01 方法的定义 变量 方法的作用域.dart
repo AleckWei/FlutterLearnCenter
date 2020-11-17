@@ -39,4 +39,15 @@ void main(){
   print(getNum());
   print(getNum2());
   print(printUserInfo());
+
+  // 方法具有作用域
+  void xxx(){
+    aaa(){
+      print('aaa');
+    }
+    aaa();
+  }
+  xxx();
+  // aaa();
+  //在xxx()外是执行不了aaa()方法的，因为它定义在了xxx()内部。
 }
