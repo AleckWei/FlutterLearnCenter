@@ -47,6 +47,21 @@ class ListContent extends StatelessWidget {
           width: 180,
           height: 180,
           color: Colors.red,
+          child: ListView(
+            children: <Widget>[
+              Image.network(
+                  'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2541977328,1379583476&fm=26&gp=0.jpg'),
+              // Image.asset('images/a.jpg'),
+              Text(
+                '标题？？',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
         Container(
           width: 180,
@@ -62,20 +77,6 @@ class ListContent extends StatelessWidget {
           width: 180,
           height: 180,
           color: Colors.deepOrange,
-          child: ListView(
-            children: <Widget>[
-              Image.network(
-                  'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2541977328,1379583476&fm=26&gp=0.jpg'),
-              Text(
-                '标题？？',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
         ),
         Container(
           width: 180,
