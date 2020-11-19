@@ -4,7 +4,9 @@ void main() {
   runApp(MyApp());
 }
 // 实现圆角以及设置圆角图片
-// 稍微麻烦的方法：先将container设置成圆的，然后再将其背景用一张图片来填充。
+// 引入本地图片的方法:
+// 在pubspec.yaml里面配置图片的路径
+// 然后在Image里面用文件路径去引用
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {

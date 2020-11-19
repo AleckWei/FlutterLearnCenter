@@ -31,13 +31,17 @@ class HomeContent extends StatelessWidget {
     // TODO: implement build
     return Center(
       child: Container(
-        child: ClipOval(
-          child: Image.asset(
-            'images/a.png',
-            height: 150,
-            width: 150,
-            fit: BoxFit.cover,
-          ),
+        width: 300,
+        height: 300,
+        decoration: BoxDecoration(
+            color: Colors.deepOrangeAccent,
+            // borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(150), // 这样就是圆
+            image: DecorationImage(
+              image: NetworkImage(
+                  "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4267112760,2898039841&fm=26&gp=0.jpg"),
+              fit: BoxFit.cover,
+            )
         ),
       ),
     );

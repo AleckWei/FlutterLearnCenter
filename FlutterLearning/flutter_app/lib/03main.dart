@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-// 实现圆角以及设置圆角图片
-// 稍微麻烦的方法：先将container设置成圆的，然后再将其背景用一张图片来填充。
+// void main() {
+//   runApp(MyApp());
+// }
+// 引入远程图片，并且设置图片的填充方式
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {
@@ -31,14 +30,17 @@ class HomeContent extends StatelessWidget {
     // TODO: implement build
     return Center(
       child: Container(
-        child: ClipOval(
-          child: Image.asset(
-            'images/a.png',
-            height: 150,
-            width: 150,
-            fit: BoxFit.cover,
-          ),
+        child: Image.network(
+          "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3963453026,374513604&fm=26&gp=0.jpg",
+          alignment: Alignment.topCenter,
+          color: Colors.deepOrangeAccent,
+          colorBlendMode: BlendMode.multiply,
+          // fit: BoxFit.cover,
+          repeat: ImageRepeat.repeat,
         ),
+        width: 300,
+        height: 300,
+        decoration: BoxDecoration(color: Colors.deepOrangeAccent),
       ),
     );
   }
