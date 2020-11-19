@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 // 又是手动地添加了一堆屎。。。
-// 实现了一个 标题 - 图片 的长列表
+// 实现了一个 标题 - 图片 的长的水平列表,并在第一个Container里面添加了由网络请求拿到的图片
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {
