@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 // 实现圆角以及设置圆角图片
 // 引入本地图片的方法:
 // 在pubspec.yaml里面配置图片的路径
