@@ -4,7 +4,8 @@ import 'res/listData.dart';
 void main() {
   runApp(MyApp());
 }
-// flutter当中的动态列表,用for循环创建这个ListView
+// 使用ListView Builder并结合listData中的数组
+// 创建一个ListView
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {
@@ -25,25 +26,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class HomeContent extends StatelessWidget {
-  List list = new List();
-
-  HomeContent() {
-    for (var i = 0; i < 20; i++) {
-      list.add(ListTile(
-        title: Text('我是第$i个标题'),
-      ));
-    }
-  }
+  // List list = new List();
+  //
+  // // 在构造函数中添加一个List，后面用于在Container中展示
+  // HomeContent() {
+  //   for (var i = 1; i <= 20; i++) {
+  //     this.list.add(ListTile(
+  //           title: Text('我是第$i个标题'),
+  //           subtitle: Text('我是第$i条数据的副标题'),
+  //         ));
+  //     // this.list.add('我是第$i条数据');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: this.list.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(this.list[index]),
-          );
-        });
+        itemCount: listData.length,
+        itemBuilder: this._getListData
+        // 不带()表示函数的赋值，带了()表示函数的执行
+        );
+  }
+
+  Widget _getListData(context, index) {
+    return ListTile(
+      leading: Image.network('imageUrl'),
+      title: Text(listData[index]['title']),
+      subtitle: Text(listData[index]['author']),
+    );
   }
 }
