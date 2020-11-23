@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'res/listData.dart';
+import '../res/listData.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // 对伸缩组件Expanded进行一个介绍以及属性的详解
 
