@@ -29,65 +29,95 @@ class MyApp extends StatelessWidget {
 class LayoutDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      children: [
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(children: [
         Row(
-          children: <Widget>[
-            //在Row当中,配置了Expanded的组件，它的width将被自动适应,手动修改不了
-            IconContainer(Icons.star, color: Colors.limeAccent),
+          children: [
             Expanded(
-                child: IconContainer(Icons.home, color: Colors.black54),
-                flex: 1),
-            // 这样就可以让右侧的图标自动填充剩余的Row
-            // Expanded(
-            //     child: IconContainer(Icons.search, color: Colors.orangeAccent),
-            //     flex: 1),
+                child: Container(
+              child:ListView(
+                children: <Widget>[
+                  SizedBox(height: 70),
+                  Text(
+                    '你好呀~',
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              height: 180,
+              decoration: BoxDecoration(
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ))
           ],
         ),
-        Row(
-          children: <Widget>[
-            //在Row当中,配置了Expanded的组件，它的width将被自动适应,手动修改不了
-            Expanded(
-                child: IconContainer(Icons.star, color: Colors.limeAccent),
-                flex: 1),
-            Expanded(
-                child: IconContainer(Icons.home, color: Colors.black54),
-                flex: 2),
-            Expanded(
-                child: IconContainer(Icons.search, color: Colors.orangeAccent),
-                flex: 1),
-          ],
-        ),
-      ],
+        SizedBox(height: 10),
+        RowContainer(),
+      ]),
     );
   }
 }
 
-// ignore: must_be_immutable
-class IconContainer extends StatelessWidget {
-  double size = 32.0;
-  Color color = Colors.redAccent;
-  IconData icon;
-
-  IconContainer(this.icon, {this.size, this.color});
-
+class RowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      child: Center(
-        child: Icon(
-          this.icon,
-          size: this.size,
-          color: Colors.white,
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            height: 180,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10)),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://www.itying.com/images/flutter/1.png'),
+                  fit: BoxFit.cover,
+                )),
+          ),
+          flex: 2,
         ),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: this.color,
-      ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            height: 180,
+            child: ListView(
+              children: [
+                Container(
+                  height: 85,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(10)),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://www.itying.com/images/flutter/2.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: 85,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(10)),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.itying.com/images/flutter/3.png'),
+                          fit: BoxFit.cover)),
+                ),
+              ],
+            ),
+          ),
+          flex: 1,
+        ),
+      ],
     );
   }
 }
