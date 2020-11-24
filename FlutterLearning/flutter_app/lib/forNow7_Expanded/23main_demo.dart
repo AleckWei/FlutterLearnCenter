@@ -39,22 +39,22 @@ class LayoutDemo extends StatelessWidget {
           children: [
             Expanded(
                 child: Container(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 70),
-                  Text(
-                    '你好呀~',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                    textAlign: TextAlign.center,
+                  child: ListView(
+                    children: <Widget>[
+                      SizedBox(height: 70),
+                      Text(
+                        '你好呀~',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              height: 180,
-              decoration: BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ))
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ))
           ],
         ),
         SizedBox(height: 10),
