@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/res/MyContainer.dart';
 import 'package:flutter_app/res/listData.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-// Stack的应用,用Positioned控制其中某个组件相对于外层容器的位置
-// 可以更加灵活，但是不清楚会不会出现不适配的问题
+// Stack的应用,用Align控制其中某个组件相对于外层容器的位置
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {
@@ -39,9 +38,8 @@ class LayoutDemo extends StatelessWidget {
         child: Stack(
           // alignment: Alignment.center,
           children: [
-            Positioned(
-              left: 10,
-              top: 2,
+            Align(
+              alignment: Alignment(0.2,-0.3),
               child: Icon(
                 Icons.home,
                 size: 30,
