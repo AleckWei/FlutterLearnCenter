@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/res/MyContainer.dart';
 import 'package:flutter_app/res/listData.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // 根据视图做的一个demo,然后针对下面3个图片进行了添加圆角的操作
 // 让ui更加圆润

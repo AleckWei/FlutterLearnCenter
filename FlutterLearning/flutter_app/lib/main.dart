@@ -6,9 +6,7 @@ void main() {
   runApp(MyApp());
 }
 
-// 根据视图做的一个demo,然后针对下面3个图片进行了添加圆角的操作
-// 让ui更加圆润
-// 进一步封装了背景有Image的Container
+// Stack的应用,用Align控制其中某个组件相对于外层容器的位置
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {
@@ -32,75 +30,57 @@ class MyApp extends StatelessWidget {
 class LayoutDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(children: [
-        Row(
+    return Center(
+      child: Container(
+        height: 400,
+        width: 300,
+        color: Colors.orangeAccent,
+        child: Stack(
+          // alignment: Alignment.center,
           children: [
-            Expanded(
-                child: Container(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 70),
-                  Text(
-                    '你好呀~',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+            Align(
+              alignment: Alignment.topLeft,
+              child: Icon(
+                Icons.home,
+                size: 30,
+                color: Colors.white,
               ),
-              height: 180,
-              decoration: BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(10),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.search,
+                size: 40,
+                color: Colors.red,
               ),
-            ))
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.star,
+                size: 70,
+                color: Colors.black,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Icon(
+                Icons.home,
+                size: 50,
+                color: Colors.teal,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Icon(
+                Icons.height,
+                size: 45,
+                color: Colors.deepPurpleAccent,
+              ),
+            ),
           ],
         ),
-        SizedBox(height: 10),
-        RowContainer(),
-      ]),
-    );
-  }
-}
-
-class RowContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: MyContainer.only('https://www.itying.com/images/flutter/1.png',
-              height: 180,
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10)),
-          flex: 2,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            height: 180,
-            child: ListView(
-              children: [
-                MyContainer.only(
-                  'https://www.itying.com/images/flutter/2.png',
-                  height: 85,
-                  topRight: Radius.circular(10),
-                ),
-                SizedBox(height: 10),
-                MyContainer.only(
-                  'https://www.itying.com/images/flutter/3.png',
-                  height: 85,
-                  bottomRight: Radius.circular(10),
-                ),
-              ],
-            ),
-          ),
-          flex: 1,
-        ),
-      ],
+      ),
     );
   }
 }
