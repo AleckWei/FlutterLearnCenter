@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/res/MyContainer.dart';
 import 'package:flutter_app/res/listData.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // Card当中使用ListTile对卡片进行设计
 
