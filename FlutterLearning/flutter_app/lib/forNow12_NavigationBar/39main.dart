@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/res/MyContainer.dart';
-import './res/listData.dart';
-import 'package:flutter_app/forNow13_Router/pages/Tabs.dart';
+import '../res/listData.dart';
+import 'package:flutter_app/forNow12_NavigationBar/pages/Tabs.dart';
 
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
@@ -12,9 +12,9 @@ void main() {
   runApp(MyApp());
 }
 
-// Flutter当中的路由跳转,简单来说就是页面的跳转
-// Flutter当中的普通路由的使用
-// 普通路由的传值:实际上就是调用要跳转页面的构造函数,在构造函数里面接收需要的值
+// BottomNavigationBar
+// 抽离了tabs组件,让main.dart的逻辑代码变得十分简洁
+// 主要的跳转逻辑放在了Tabs.dart文件当中
 
 //自定义组件 == 创建一个类：
 class MyApp extends StatelessWidget {

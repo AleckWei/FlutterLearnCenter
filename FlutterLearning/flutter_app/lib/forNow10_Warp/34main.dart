@@ -43,7 +43,7 @@ class LayoutDemo extends StatelessWidget {
       child: Wrap(
         // Wrap 组件的作用就是当主轴放不下内容
         // 的时候，就会自动向垂直轴扩展过去
-        direction: Axis.vertical,
+        direction: Axis.vertical, // 这样就会先按照垂直方向排布
         spacing: 10, // 主轴上的间距
         runSpacing: 25, // 纵轴上的间距(纵轴是垂直于主轴的，当主轴是x轴的话，纵轴就是y轴)
         // alignment: WrapAlignment.spaceEvenly,

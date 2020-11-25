@@ -1,16 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/res/MyContainer.dart';
-import './res/listData.dart';
+// import 'package:flutter_app/res/MyContainer.dart';
+// import 'package:flutter_app/res/listData.dart';
 import 'package:flutter_app/forNow13_Router/pages/Tabs.dart';
 
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // Flutter当中的路由跳转,简单来说就是页面的跳转
 // Flutter当中的普通路由的使用
