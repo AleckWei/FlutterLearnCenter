@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/res/MyContainer.dart';
-import 'res/listData.dart';
+import '../res/listData.dart';
 
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // Card当中使用ListTile对卡片进行设计
 // 这一部分用遍历的方法去读取listData当中的数据
@@ -22,10 +22,7 @@ class MyApp extends StatelessWidget {
       // MaterialApp 一般作为app的根组件
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Flutter Demo',
-          ),
-          centerTitle: true,
+          title: Text('Flutter Demo'),
         ),
         body: LayoutDemo(),
       ),
