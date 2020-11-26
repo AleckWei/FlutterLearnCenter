@@ -15,9 +15,12 @@ class _CategoryPageState extends State<CategoryPage> {
       children: [
         RaisedButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return FormPage(title: "传了个值过去");
-            }));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            //   return FormPage(title: "传了个值过去");
+            // }));
+            // 普通路由，直接指定页面的类
+            Navigator.pushNamed(context, '/form',arguments: {"title":"命名路由的传值"});
+            // 命名路由，在根页面配置了路由表之后，其他页面使用这种路由方式可以跳转，并且带一个值过去
           },
           child: Text('跳转到表单页面并传值'),
           color: Theme.of(context).accentColor,

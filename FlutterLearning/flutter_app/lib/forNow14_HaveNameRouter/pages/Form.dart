@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class FormPage extends StatelessWidget {
+  final arguments; // 注意：如果想要正常的对象 通过key取出value的话，这个arguments最好由final修饰
   List list = new List();
   String title = '表单';
 
-  FormPage({this.title = '表单页面'}) {
+  // FormPage.args({this.arguments});
+  FormPage({this.arguments, this.title = '表单页面'}) {
+    // 这个title在这里需要传值的话，是必须要给予一个初始值的，不然会有问题
     for (var i = 1; i <= 20; i++) {
       this.list.add(Text('这是第$i个表单'));
     }
@@ -22,7 +25,10 @@ class FormPage extends StatelessWidget {
           // 返回上一个页面
         },
       ),
-      appBar: AppBar(title: Text(this.title)),
+      // Text('${arguments != null ? arguments['id'] : '0'}'),
+      appBar: AppBar(
+        title: Text('${arguments['title']}'),
+      ),
       body: ListView(
         children: this
             .list

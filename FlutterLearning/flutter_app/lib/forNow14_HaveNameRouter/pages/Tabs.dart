@@ -3,7 +3,6 @@ import 'package:flutter_app/forNow14_HaveNameRouter/pages/tabs/Home.dart';
 import 'package:flutter_app/forNow14_HaveNameRouter/pages/tabs/Category.dart';
 import 'package:flutter_app/forNow14_HaveNameRouter/pages/tabs/Settings.dart';
 
-
 class Tabs extends StatefulWidget {
   @override
   _TabsState createState() => _TabsState();
@@ -38,7 +37,7 @@ class _TabsState extends State<Tabs> {
         },
         iconSize: 24.0,
         // icon的大小
-        fixedColor: Colors.deepPurpleAccent,
+        fixedColor: Theme.of(context).accentColor,
         // 表示选中的图标的颜色
         type: BottomNavigationBarType.fixed,
         // 配置底部taps可以有多个按钮,如果没有这个配置,

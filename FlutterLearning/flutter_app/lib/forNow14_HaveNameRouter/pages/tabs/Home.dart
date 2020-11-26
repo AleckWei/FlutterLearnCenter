@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: 20),
         RaisedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/search',arguments: {});
+            Navigator.pushNamed(context, '/search', arguments: {"id": 123});
             // 命名路由的实现
           },
           child: Text('跳转到搜索页面'),
@@ -25,7 +25,14 @@ class _HomePageState extends State<HomePage> {
           textTheme: ButtonTextTheme.primary,
         ),
         SizedBox(height: 20),
-
+        RaisedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/product');
+          },
+          child: Text('跳转到商品页面'),
+          color: Theme.of(context).accentColor,
+          textTheme: ButtonTextTheme.primary,
+        )
       ],
     );
   }

@@ -10,7 +10,7 @@ class SearchPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('这里是搜索页面'),
       ),
-      body: Text('搜索页面的内容区域${arguments !=null ? arguments['id']:'0'}'),
+      body: Text('搜索页面的内容区域${arguments != null ? arguments['id'] : '0'}'),
     );
   }
 }
