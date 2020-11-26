@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/forNow14_HaveNameRouter/pages/ProductInfo.dart';
-import 'package:flutter_app/forNow14_HaveNameRouter/pages/Tabs.dart';
-import 'package:flutter_app/forNow14_HaveNameRouter/pages/Form.dart';
-import 'package:flutter_app/forNow14_HaveNameRouter/pages/Search.dart';
-import 'package:flutter_app/forNow14_HaveNameRouter/pages/Product.dart';
+
+import 'package:flutter_app/forNow17_AppBar/pages/Tabs.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/Form.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/Search.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/Product.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/ProductInfo.dart';
+
+import 'package:flutter_app/forNow17_AppBar/pages/user/Login.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterFirst.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterSecond.dart';
+import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterThird.dart';
+// router文件请记得更新到你想要运行的包
 
 // 配置路由
 final routes = {
@@ -13,6 +20,12 @@ final routes = {
   '/search': (context, {arguments}) => SearchPage(arguments: arguments),
   '/product': (context, {arguments}) => Product(),
   '/productInfo': (context, {arguments}) => ProductInfoPage(arguments: arguments),
+  
+  // 用户登录和注册的页面
+  '/login': (context) => LoginPage(),
+  '/registerFirst': (context) => RegisterFirstPage(),
+  '/registerSecond': (context) => RegisterSecondPage(),
+  '/registerThird': (context) => RegisterThirdPage(),
 };
 
 // 固定写法
