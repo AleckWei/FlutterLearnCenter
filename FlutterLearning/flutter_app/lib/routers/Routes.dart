@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow17_AppBar/pages/Tabs.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/Form.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/Search.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/Product.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/ProductInfo.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Tabs.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Form.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Search.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Product.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/ProductInfo.dart';
 
-import 'package:flutter_app/forNow17_AppBar/pages/user/Login.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterFirst.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterSecond.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/user/RegisterThird.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/Login.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterFirst.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterSecond.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterThird.dart';
+
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/AppBarDemo.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/AppBarDemo2.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
@@ -26,6 +29,10 @@ final routes = {
   '/registerFirst': (context) => RegisterFirstPage(),
   '/registerSecond': (context) => RegisterSecondPage(),
   '/registerThird': (context) => RegisterThirdPage(),
+  
+  // 自定义appBar：
+  '/appBarDemo':(context) => AppBarDemoPage(),
+   '/appBarDemo2':(context) => AppBarDemoPage2(),
 };
 
 // 固定写法

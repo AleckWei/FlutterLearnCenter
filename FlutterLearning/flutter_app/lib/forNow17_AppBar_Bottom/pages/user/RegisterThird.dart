@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/Tabs.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Tabs.dart';
 
 class RegisterThirdPage extends StatelessWidget {
   @override

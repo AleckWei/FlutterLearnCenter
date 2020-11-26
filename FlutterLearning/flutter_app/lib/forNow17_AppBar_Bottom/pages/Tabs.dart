@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/tabs/Home.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/tabs/Category.dart';
-import 'package:flutter_app/forNow17_AppBar/pages/tabs/Settings.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/tabs/Home.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/tabs/Category.dart';
+import 'package:flutter_app/forNow17_AppBar_Bottom/pages/tabs/Settings.dart';
 
 class Tabs extends StatefulWidget {
   final index;
@@ -27,12 +27,12 @@ class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Flutter Demo',
-        ),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Flutter Demo',
+      //   ),
+      //   centerTitle: true,
+      // ),
       body: this._pageList[this._currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: this._currentIndex,
