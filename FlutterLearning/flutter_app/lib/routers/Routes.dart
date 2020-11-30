@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Tabs.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Form.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Search.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/Product.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/ProductInfo.dart';
+import 'package:flutter_app/forNow18_AppBar_Top//pages/Tabs.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/Form.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/Search.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/Product.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/ProductInfo.dart';
 
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/Login.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterFirst.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterSecond.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/user/RegisterThird.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/user/Login.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterFirst.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterSecond.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterThird.dart';
 
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/AppBarDemo.dart';
-import 'package:flutter_app/forNow17_AppBar_Bottom/pages/AppBarDemo2.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/AppBarDemo.dart';
+import 'package:flutter_app/forNow18_AppBar_Top/pages/AppBarDemo2.dart';
+
+import 'package:flutter_app/forNow18_AppBar_Top/pages/TabBarController.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
@@ -22,22 +24,26 @@ final routes = {
   '/form': (context, {arguments}) => FormPage(arguments: arguments),
   '/search': (context, {arguments}) => SearchPage(arguments: arguments),
   '/product': (context, {arguments}) => Product(),
-  '/productInfo': (context, {arguments}) => ProductInfoPage(arguments: arguments),
-  
+  '/productInfo': (context, {arguments}) =>
+      ProductInfoPage(arguments: arguments),
+
   // 用户登录和注册的页面
   '/login': (context) => LoginPage(),
   '/registerFirst': (context) => RegisterFirstPage(),
   '/registerSecond': (context) => RegisterSecondPage(),
   '/registerThird': (context) => RegisterThirdPage(),
-  
+
   // 自定义appBar：
-  '/appBarDemo':(context) => AppBarDemoPage(),
-   '/appBarDemo2':(context) => AppBarDemoPage2(),
+  '/appBarDemo': (context) => AppBarDemoPage(),
+  '/appBarDemo2': (context) => AppBarDemoPage2(),
+
+  // 顶部TabBar：
+  '/tabBarController': (context) => TabBarControllerPage(),
 };
 
 // 固定写法
 // ignore: missing_return
-// ignore: top_level_function_literal_block
+// ignore: top_level_function_literal_block, missing_return
 var onGenerateRoute = (RouteSettings settings) {
   // 统一处理
   final String name = settings.name;

@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.of(context).pushNamed('/appBarDemo2');
             },
-            child: Text('转到appBarPage2'),
+            child: Text('TabController定义顶部tab切换'),
           )
         ],
       ),
