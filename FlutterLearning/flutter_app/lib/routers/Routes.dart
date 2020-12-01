@@ -1,44 +1,49 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow18_AppBar_Top//pages/Tabs.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/Form.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/Search.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/Product.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/ProductInfo.dart';
+import 'package:flutter_app/forNow19_Drawer/pages/Tabs.dart';
+import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
-import 'package:flutter_app/forNow18_AppBar_Top/pages/user/Login.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterFirst.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterSecond.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/user/RegisterThird.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/Search.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/Product.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/ProductInfo.dart';
 
-import 'package:flutter_app/forNow18_AppBar_Top/pages/AppBarDemo.dart';
-import 'package:flutter_app/forNow18_AppBar_Top/pages/AppBarDemo2.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/user/Login.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/user/RegisterFirst.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/user/RegisterSecond.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/user/RegisterThird.dart';
+//
+// import 'package:flutter_app/forNow19_Drawer/pages/AppBarDemo.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/AppBarDemo2.dart';
 
-import 'package:flutter_app/forNow18_AppBar_Top/pages/TabBarController.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/TabBarController.dart';
+
+import 'package:flutter_app/forNow19_Drawer/pages/User.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
 final routes = {
   // 跟vue一样,在根组件下统一管理路由
-  '/': (context, {arguments}) => Tabs(),
-  '/form': (context, {arguments}) => FormPage(arguments: arguments),
-  '/search': (context, {arguments}) => SearchPage(arguments: arguments),
-  '/product': (context, {arguments}) => Product(),
-  '/productInfo': (context, {arguments}) =>
-      ProductInfoPage(arguments: arguments),
+  '/': (context, {arguments}) => Tabs2(),
+  // '/form': (context, {arguments}) => FormPage(arguments: arguments),
+  // '/search': (context, {arguments}) => SearchPage(arguments: arguments),
+  // '/product': (context, {arguments}) => Product(),
+  // '/productInfo': (context, {arguments}) =>
+  //     ProductInfoPage(arguments: arguments),
 
   // 用户登录和注册的页面
-  '/login': (context) => LoginPage(),
-  '/registerFirst': (context) => RegisterFirstPage(),
-  '/registerSecond': (context) => RegisterSecondPage(),
-  '/registerThird': (context) => RegisterThirdPage(),
+  // '/login': (context) => LoginPage(),
+  // '/registerFirst': (context) => RegisterFirstPage(),
+  // '/registerSecond': (context) => RegisterSecondPage(),
+  // '/registerThird': (context) => RegisterThirdPage(),
 
   // 自定义appBar：
-  '/appBarDemo': (context) => AppBarDemoPage(),
-  '/appBarDemo2': (context) => AppBarDemoPage2(),
+  // '/appBarDemo': (context) => AppBarDemoPage(),
+  // '/appBarDemo2': (context) => AppBarDemoPage2(),
 
   // 顶部TabBar：
-  '/tabBarController': (context) => TabBarControllerPage(),
+  // '/tabBarController': (context) => TabBarControllerPage(),
+  '/userPage': (context) => UserPage(),
 };
 
 // 固定写法
