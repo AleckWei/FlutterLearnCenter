@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow19_Drawer/pages/Tabs.dart';
-import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
+import 'package:flutter_app/forNow20_Button//pages/Tabs.dart';
+// import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Search.dart';
@@ -19,12 +19,13 @@ import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/TabBarController.dart';
 
 import 'package:flutter_app/forNow19_Drawer/pages/User.dart';
+import 'package:flutter_app/forNow20_Button/pages/Button.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
 final routes = {
   // 跟vue一样,在根组件下统一管理路由
-  '/': (context, {arguments}) => Tabs2(),
+  '/': (context, {arguments}) => Tabs(),
   // '/form': (context, {arguments}) => FormPage(arguments: arguments),
   // '/search': (context, {arguments}) => SearchPage(arguments: arguments),
   // '/product': (context, {arguments}) => Product(),
@@ -43,7 +44,8 @@ final routes = {
 
   // 顶部TabBar：
   // '/tabBarController': (context) => TabBarControllerPage(),
-  '/userPage': (context) => UserPage(),
+  // '/userPage': (context) => UserPage(),
+  '/buttonDemoPage': (context) => ButtonDemoPage(),
 };
 
 // 固定写法

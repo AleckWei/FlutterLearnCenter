@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../res/listData.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // GridView,使用GridView.builder去构建一个GridView
 // 其实.builder方法相当于可以动态生成这个网格列表了

@@ -8,9 +8,9 @@ import 'package:flutter_app/forNow14_HaveNameRouter/pages/Search.dart';
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // Flutter当中的命名路由
 // 在根组件下注册所有的路由，在需要跳路由的地方使用

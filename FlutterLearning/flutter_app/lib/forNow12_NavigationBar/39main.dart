@@ -8,9 +8,9 @@ import 'package:flutter_app/forNow12_NavigationBar/pages/Tabs.dart';
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // BottomNavigationBar
 // 抽离了tabs组件,让main.dart的逻辑代码变得十分简洁

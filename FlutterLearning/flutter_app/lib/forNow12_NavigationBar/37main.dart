@@ -7,9 +7,9 @@ import 'package:flutter_app/res/listData.dart';
 // 如果在程序运行当中修改了import的文件
 // 即非main.dart中的数据，就要把整个程序停掉然后重新运行
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
 // BottomNavigationBar
 // 自定义底部导航条,使用了一些基本属性去获取选中的下标

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 // 实现圆角以及设置圆角图片
 // 稍微麻烦的方法：先将container设置成圆的，然后再将其背景用一张图片来填充。
 
