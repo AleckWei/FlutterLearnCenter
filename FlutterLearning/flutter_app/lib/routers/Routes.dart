@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow20_Button//pages/Tabs.dart';
+import 'package:flutter_app/forNow21_FloatingActionButton/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
@@ -19,7 +19,7 @@ import 'package:flutter_app/forNow20_Button//pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/TabBarController.dart';
 
 import 'package:flutter_app/forNow19_Drawer/pages/User.dart';
-import 'package:flutter_app/forNow20_Button/pages/Button.dart';
+import 'package:flutter_app/forNow21_FloatingActionButton/pages/Button.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
