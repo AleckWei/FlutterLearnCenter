@@ -33,8 +33,14 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.of(context).pushNamed('/radioDemoPage');
             },
-            child: Text('RadioDemo'),
+            child: Text('Radio Switch Demo'),
           ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/fromDemoPage');
+            },
+            child: Text('信息登记页'),
+          )
         ],
       ),
     );

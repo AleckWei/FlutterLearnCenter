@@ -46,6 +46,7 @@ class _CheckBoxDemoPageState extends State<CheckBoxDemoPage> {
             },
             title: Text('标题'),
             subtitle: Text('二级标题'),
+            selected: this._check,
           ),
           Divider(),
           CheckboxListTile(
@@ -58,6 +59,7 @@ class _CheckBoxDemoPageState extends State<CheckBoxDemoPage> {
             title: Text('标题'),
             subtitle: Text('二级标题'),
             secondary: Icon(Icons.help_center_outlined),
+            selected: this._check,
           ),
         ],
       ),
