@@ -19,7 +19,7 @@ class _CheckBoxDemoPageState extends State<CheckBoxDemoPage> {
           Row(
             children: [
               Checkbox(
-                value: this._check,
+                value: this._check, // value是必须的
                 onChanged: (bool val) {
                   setState(() {
                     // this._check = !this._check;
@@ -27,8 +27,37 @@ class _CheckBoxDemoPageState extends State<CheckBoxDemoPage> {
                     //  上面两行效果相同
                   });
                 },
+                activeColor: Colors.green,
               ),
             ],
+          ),
+          Row(
+            children: [
+              Text(this._check ? "选中" : "未选中"),
+            ],
+          ),
+          SizedBox(height: 40),
+          CheckboxListTile(
+            value: this._check,
+            onChanged: (bool val) {
+              setState(() {
+                this._check = val;
+              });
+            },
+            title: Text('标题'),
+            subtitle: Text('二级标题'),
+          ),
+          Divider(),
+          CheckboxListTile(
+            value: this._check,
+            onChanged: (bool val) {
+              setState(() {
+                this._check = val;
+              });
+            },
+            title: Text('标题'),
+            subtitle: Text('二级标题'),
+            secondary: Icon(Icons.help_center_outlined),
           ),
         ],
       ),
