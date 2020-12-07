@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow21_FloatingActionButton/pages/Tabs.dart';
+import 'package:flutter_app/forNow22_From/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
@@ -19,7 +19,10 @@ import 'package:flutter_app/forNow21_FloatingActionButton/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/TabBarController.dart';
 
 import 'package:flutter_app/forNow19_Drawer/pages/User.dart';
-import 'package:flutter_app/forNow21_FloatingActionButton/pages/Button.dart';
+import 'package:flutter_app/forNow22_From/pages/Button.dart';
+import 'package:flutter_app/forNow22_From/pages/CheckBox.dart';
+import 'package:flutter_app/forNow22_From/pages/Radio.dart';
+import 'package:flutter_app/forNow22_From/pages/TextField.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
@@ -46,6 +49,9 @@ final routes = {
   // '/tabBarController': (context) => TabBarControllerPage(),
   // '/userPage': (context) => UserPage(),
   '/buttonDemoPage': (context) => ButtonDemoPage(),
+  '/textFieldDemoPage': (context) => TextFieldDemoPage(),
+  '/checkBoxDemoPage': (context) => CheckBoxDemoPage(),
+  '/radioDemoPage': (context) => RadioDemoPage()
 };
 
 // 固定写法
