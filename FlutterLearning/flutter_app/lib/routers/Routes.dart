@@ -26,6 +26,7 @@ import 'package:flutter_app/forNow23_Date/pages/Tabs.dart';
 // import 'package:flutter_app/forNow22_From/pages/FromDemo.dart';
 
 import 'package:flutter_app/forNow23_Date/pages/DataPicker.dart';
+import 'package:flutter_app/forNow23_Date/pages/DatePickerPub.dart';
 
 // router文件请记得更新到你想要运行的包
 
@@ -60,7 +61,8 @@ final routes = {
   // 表单组件
   // '/fromDemoPage': (context) => FormDemoPage(),
 
-  '/datePickerDemo':(context) => DatePickerDemo(),
+  '/datePickerDemo': (context) => DatePickerDemo(),
+  '/datePickerPubDemo': (context) => DatePickerPubDemo(),
 };
 
 // 固定写法
