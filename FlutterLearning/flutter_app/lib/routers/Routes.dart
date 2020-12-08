@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow23_Date/pages/Tabs.dart';
+import 'package:flutter_app/forNow24_Swiper/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
@@ -25,8 +25,12 @@ import 'package:flutter_app/forNow23_Date/pages/Tabs.dart';
 // import 'package:flutter_app/forNow22_From/pages/TextField.dart';
 // import 'package:flutter_app/forNow22_From/pages/FromDemo.dart';
 
+// 第三方时间组件
 import 'package:flutter_app/forNow23_Date/pages/DataPicker.dart';
 import 'package:flutter_app/forNow23_Date/pages/DatePickerPub.dart';
+
+// Swiper轮播组件
+import 'package:flutter_app/forNow24_Swiper/pages/Swiper.dart';
 
 // router文件请记得更新到你想要运行的包
 
@@ -61,8 +65,12 @@ final routes = {
   // 表单组件
   // '/fromDemoPage': (context) => FormDemoPage(),
 
+  // 原生&第三方 时间组件
   '/datePickerDemo': (context) => DatePickerDemo(),
   '/datePickerPubDemo': (context) => DatePickerPubDemo(),
+
+  // Swiper轮播图组件
+  '/swiperPage': (context) => SwiperPage(),
 };
 
 // 固定写法
