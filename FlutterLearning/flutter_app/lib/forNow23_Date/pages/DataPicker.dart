@@ -28,10 +28,12 @@ class _DatePickerDemoState extends State<DatePickerDemo> {
   _showDatePicker1() async {
     // 使用async 和 await 的异步处理方法去获取这个回调
     var result = await showDatePicker(
-        context: context,
-        initialDate: this._nowDate,
-        firstDate: DateTime(1980),
-        lastDate: DateTime(2100));
+      context: context,
+      initialDate: this._nowDate,
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2100),
+      // locale: Locale('zh'),
+    );
     print(result);
     setState(() {
       this._nowDate = result;
@@ -104,7 +106,7 @@ class _DatePickerDemoState extends State<DatePickerDemo> {
                   ],
                 ),
                 onTap: () {
-                  print('打开日期组件');
+                  print('打开时间组件');
                   _showDatePicker2();
                 },
               ),

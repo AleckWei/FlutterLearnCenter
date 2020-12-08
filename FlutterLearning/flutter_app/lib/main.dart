@@ -39,13 +39,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
+
+      // 语言配置
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        const.Locale('zh', 'CH'),
-        const.Locale('en', 'US'),
+        const Locale('zh', 'CH'),
+        const Locale('en', 'US'),
       ],
     );
   }
