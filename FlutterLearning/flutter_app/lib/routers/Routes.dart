@@ -32,6 +32,9 @@ import 'package:flutter_app/forNow23_Date/pages/DatePickerPub.dart';
 // Swiper轮播组件
 import 'package:flutter_app/forNow24_Swiper/pages/Swiper.dart';
 
+// 故障码计算
+import 'package:flutter_app/forNow24_Swiper/pages/Count.dart';
+
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
@@ -71,6 +74,9 @@ final routes = {
 
   // Swiper轮播图组件
   '/swiperPage': (context) => SwiperPage(),
+
+  // 故障计算
+  '/countPage': (context) => CounterPage(),
 };
 
 // 固定写法

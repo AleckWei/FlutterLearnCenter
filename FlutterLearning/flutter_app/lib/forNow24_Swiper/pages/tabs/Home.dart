@@ -18,6 +18,12 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text('swiper轮播图'),
           ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/countPage');
+            },
+            child: Text('跑去计算故障码'),
+          ),
         ],
       ),
     );
