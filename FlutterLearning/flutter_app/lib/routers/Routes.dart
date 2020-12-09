@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow25_Dialog//pages/Tabs.dart';
+import 'package:flutter_app/forNow26_Dialog_Self/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
@@ -37,6 +37,7 @@ import 'package:flutter_app/forNow24_Swiper/pages/Count.dart';
 
 // Dialog演示
 import 'package:flutter_app/forNow25_Dialog/pages/Dialog.dart';
+
 
 // router文件请记得更新到你想要运行的包
 
