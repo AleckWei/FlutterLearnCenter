@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_app/forNow26_Dialog_Self/pages/Tabs.dart';
+import 'package:flutter_app/forNow27_Map_Json_Http/pages/Tabs.dart';
 // import 'package:flutter_app/forNow19_Drawer/pages/Tabs2.dart';
 
 // import 'package:flutter_app/forNow19_Drawer/pages/Form.dart';
@@ -38,7 +38,8 @@ import 'package:flutter_app/forNow24_Swiper/pages/Count.dart';
 // Dialog演示
 import 'package:flutter_app/forNow25_Dialog/pages/Dialog.dart';
 
-
+import 'package:flutter_app/forNow27_Map_Json_Http/pages/Http.dart';
+import 'package:flutter_app/forNow27_Map_Json_Http/pages/Http_ListBuilder.dart';
 // router文件请记得更新到你想要运行的包
 
 // 配置路由
@@ -84,6 +85,10 @@ final routes = {
 
   // Dialog演示
   '/dialogPage': (context) => DialogPage(),
+
+  // Http请求演示
+  '/httpDemoPage': (context) => HttpDemoPage(),
+  '/http2DemoPage': (context) => Http2DemoPage(),
 };
 
 // 固定写法
