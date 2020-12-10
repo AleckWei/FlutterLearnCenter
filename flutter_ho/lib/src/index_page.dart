@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ho/src/utils/navigator_utils.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,24 +26,35 @@ class _IndexPageState extends State<IndexPage> {
     super.initState();
 
     Future.delayed(Duration.zero, () {
-      Navigator.of(context)
-          .push(PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation) {
-                return PermissionRequestWidget(
-                  permissionList: this._list,
-                  permission: Permission.camera,
-                );
-              }))
-          .then((value) {
-        if (value == null || value == false) {
-          //  权限请求不通过
-        } else {
-          //  权限请求通过
-        }
-      });
+      initData();
+      // Navigator.of(context)
+      //     .push(PageRouteBuilder(
+      //         opaque: false,
+      //         pageBuilder: (BuildContext context, Animation<double> animation,
+      //             Animation<double> secondaryAnimation) {
+      //           return PermissionRequestWidget(
+      //             permissionList: this._list,
+      //             permission: Permission.camera,
+      //           );
+      //         }))
+      //     .then((value) {
+      //   if (value == null || value == false) {
+      //     //  权限请求不通过
+      //   } else {
+      //     //  权限请求通过
+      //   }
+      // });
     });
+  }
+
+  void initData() {
+    NavigatorUtils.pushPageByFade(
+      context: context,
+      targetPage: PermissionRequestWidget(
+        permissionList: this._list,
+        permission: Permission.camera,
+      ),
+    );
   }
 
   @override

@@ -16,7 +16,7 @@ class PermissionRequestWidget extends StatefulWidget {
       {@required this.permission,
       @required this.permissionList,
       this.isCloseApp = false,
-      this.leftButtonText = '退出应用'});
+      this.leftButtonText = '再考虑一下'});
 
   @override
   _PermissionRequestWidgetState createState() =>
@@ -31,7 +31,6 @@ class _PermissionRequestWidgetState extends State<PermissionRequestWidget>
   //页面初始化
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkPermission();
     //  注册观察者
@@ -48,7 +47,6 @@ class _PermissionRequestWidgetState extends State<PermissionRequestWidget>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed && _isGoSetting) {
       // 当app被重新启动
@@ -80,14 +78,16 @@ class _PermissionRequestWidgetState extends State<PermissionRequestWidget>
     } else if (status.isDenied) {
       if (Platform.isIOS) {
         // ios平台没有拒绝后第二次请求，所以就得直接去设置中心了
-        showPermissionAlert(widget.permissionList[2], "去设置中心", permission);
+        showPermissionAlert(widget.permissionList[2], "去设置中心", permission,
+            isSetting: true);
         return;
       }
       //  如果用户拒绝了这个权限
       showPermissionAlert(widget.permissionList[1], "重试", permission);
     } else if (status.isPermanentlyDenied) {
       //  如果用户拒绝了这个权限并且不再询问这个权限
-      showPermissionAlert(widget.permissionList[2], "去设置中心", permission);
+      showPermissionAlert(widget.permissionList[2], "去设置中心", permission,
+          isSetting: true);
     } else {
       //  通过了权限申请
       Navigator.of(context).pop(true);
@@ -134,9 +134,6 @@ class _PermissionRequestWidgetState extends State<PermissionRequestWidget>
                     if (isSetting) {
                       _isGoSetting = true;
                       //  去设置中心
-                      if (Platform.isAndroid) {
-                        print('安卓跳转');
-                      }
                       openAppSettings(); // 调用系统方法前往设置中心
                     } else {
                       // 申请权限
