@@ -96,8 +96,11 @@ class _PermissionRequestWidgetState extends State<PermissionRequestWidget>
 
   // 设置一个弹窗（苹果风格）
   void showPermissionAlert(
-      String msg, String rightString, Permission permission,
-      {bool isSetting = false}) {
+      String msg,
+      String rightString,
+      Permission permission,
+      {bool isSetting = false}
+      ) {
     showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {

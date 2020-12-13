@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ho/src/pages/common/protocol_model.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
 
@@ -12,7 +14,7 @@ class IndexPage extends StatefulWidget {
   _IndexPageState createState() => _IndexPageState();
 }
 
-class _IndexPageState extends State<IndexPage> {
+class _IndexPageState extends State<IndexPage> with ProtocolModel {
   // 保存弹出框文案的list
   List<String> _list = [
     '为您更好的体验应用，所以需要获取您手机文件存储权限，以保存您一些偏好设置',
@@ -64,11 +66,14 @@ class _IndexPageState extends State<IndexPage> {
         permission: Permission.camera,
         // 显示关闭应用的按钮
         isCloseApp: true,
+        // 左边按钮的文字
+        leftButtonText: '退出',
       ),
       // 权限申请的结果
       dismissCallBack: (value) {
         // 插值表达法
         LogUtils.e('权限申请结果$value');
+        initDataNext();
       },
     );
   }
@@ -84,5 +89,25 @@ class _IndexPageState extends State<IndexPage> {
         ),
       ),
     );
+  }
+
+  // 初始化工具类
+  void initDataNext() async {
+    //  当中要初始我们本地的方法
+    //  初始第三方sdk
+    //  初始隐私协议
+    bool isAgreement = await showProtocolFunction(context);
+    if (isAgreement) {
+      //  表示同意
+      LogUtils.e('同意协议');
+    } else {
+      LogUtils.e('不同意协议');
+      closeApp();
+    }
+    //  等业务，根据具体业务来操作
+  }
+
+  void closeApp() {
+    SystemChannels.platform.invokeMapMethod("SystemNavigator.pop");
   }
 }
