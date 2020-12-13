@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
 
 import 'package:permission_handler/permission_handler.dart';
@@ -48,12 +48,28 @@ class _IndexPageState extends State<IndexPage> {
   }
 
   void initData() {
+    // 获取当前的运行环境
+    bool isLog = !bool.fromEnvironment("dart.vm.product");
+    // 当运行环境不为release环境时，不输出日志
+    LogUtils.init(islog: isLog);
+    LogUtils.e('权限申请');
+    // 权限申请
     NavigatorUtils.pushPageByFade(
       context: context,
+      // 目标页面
       targetPage: PermissionRequestWidget(
+        // 提示文案
         permissionList: this._list,
+        // 所需要申请的权限
         permission: Permission.camera,
+        // 显示关闭应用的按钮
+        isCloseApp: true,
       ),
+      // 权限申请的结果
+      dismissCallBack: (value) {
+        // 插值表达法
+        LogUtils.e('权限申请结果$value');
+      },
     );
   }
 
