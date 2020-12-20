@@ -114,7 +114,10 @@ class ProtocolModel {
     LogUtils.e("查看用户协议");
     NavigatorUtils.pushPage(
         context: context,
-        targetPage: CommonWebViewPage(htmlUrl: "https://www.baidu.com"));
+        targetPage: CommonWebViewPage(
+          pageTitle: "用户协议",
+          htmlUrl: "https://www.baidu.com",
+        ));
   }
 
   // 查看隐私协议
@@ -122,6 +125,9 @@ class ProtocolModel {
     LogUtils.e("查看隐私协议");
     NavigatorUtils.pushPage(
         context: context,
-        targetPage: CommonWebViewPage(htmlUrl: "https://www.baidu.com"));
+        targetPage: CommonWebViewPage(
+          pageTitle: "隐私协议",
+          htmlUrl: "https://www.baidu.com",
+        ));
   }
 }

@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ho/src/pages/common/protocol_model.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
+import 'package:flutter_ho/src/utils/sp_utils.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
@@ -96,18 +100,46 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
     //  当中要初始我们本地的方法
     //  初始第三方sdk
     //  初始隐私协议
-    bool isAgreement = await showProtocolFunction(context);
+    //  等业务，根据具体业务来操作
+
+    if (Platform.isIOS) {
+      // 这个方法是在ios平台上使用的
+      Directory libDire = await getLibraryDirectory();
+      LogUtils.e("lieDire: $libDire");
+    }
+
+    // 初始化数据存储工具
+    await SPUtils.init();
+
+    // 先读取一下是否有同意隐私协议的标识
+    bool isAgreement = SPUtils.getBool("isAgreement");
+    LogUtils.e("isAgreement: $isAgreement");
+
+    if (isAgreement == null || !isAgreement) {
+      isAgreement = await showProtocolFunction(context);
+    }
+
     if (isAgreement) {
       //  表示同意
       LogUtils.e('同意协议');
+
+      // 保存一下 已经同意 隐私协议 的标识
+      SPUtils.save("isAgreement", true);
+
+      next();
     } else {
       LogUtils.e('不同意协议');
+      SPUtils.save("isAgreement", false);
       closeApp();
     }
-    //  等业务，根据具体业务来操作
   }
 
   void closeApp() {
     SystemChannels.platform.invokeMapMethod("SystemNavigator.pop");
+  }
+
+  void next() {
+    //  引导 页面 or
+    //  倒计时页面
   }
 }
