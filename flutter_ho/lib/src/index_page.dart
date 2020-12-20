@@ -7,6 +7,7 @@ import 'package:flutter_ho/src/pages/common/protocol_model.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
 import 'package:flutter_ho/src/utils/sp_utils.dart';
+import 'package:flutter_ho/src/welcome_page.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:permission_handler/permission_handler.dart';
@@ -141,5 +142,10 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
   void next() {
     //  引导 页面 or
     //  倒计时页面
+    NavigatorUtils.pushPageByFade(
+      context: context,
+      targetPage: WelcomePage(),
+      isReplace: true,
+    );
   }
 }

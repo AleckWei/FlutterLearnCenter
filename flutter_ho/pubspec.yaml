@@ -18,6 +18,8 @@ dependencies:
   shared_preferences: ^0.5.12+4
   #  获取app路径的
   path_provider: ^1.6.24
+  #  视频播放依赖包：
+  video_player: ^1.0.1
 
 dev_dependencies:
   flutter_test:
