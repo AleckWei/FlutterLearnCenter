@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/welcome_time_widget.dart';
+import 'package:flutter_ho/src/welcome_video_widget.dart';
 
 // 倒计时页面
 class WelcomePage extends StatefulWidget {
@@ -20,6 +21,9 @@ class _WelcomePageState extends State<WelcomePage> {
           children: [
             //  第一层 背景 可以是一个图片
             //  也可以是一个视频播放
+            Positioned.fill(
+              child: WelcomeVideoWidget(),
+            ),
 
             //  第二层是右下角的倒计时显示
             //  屏幕右下角对齐
