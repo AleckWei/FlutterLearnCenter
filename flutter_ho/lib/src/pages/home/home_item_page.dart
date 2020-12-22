@@ -16,7 +16,7 @@ class _HomeItemPageState extends State<HomeItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('第 ${widget.flag} 个页面'),
       ),
       backgroundColor: Colors.grey[200],
       body: ListView.builder(
