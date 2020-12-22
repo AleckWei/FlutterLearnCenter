@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/home_page.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
+import 'package:flutter_ho/src/utils/navigator_utils.dart';
 
 // 倒计时页面（从welcome_page.dart中抽离出来）
 class WelcomeTimeWidget extends StatefulWidget {
@@ -19,7 +21,7 @@ class _WelcomeTimeWidgetState extends State<WelcomeTimeWidget> {
     _timer = Timer.periodic(
       // 创建计时器，每秒执行一次callBack
       Duration(seconds: 1),
-          (timer) {
+      (timer) {
         if (currentTime == 0) {
           //  停止计时器，前往首页
           _timer.cancel();
@@ -85,5 +87,10 @@ class _WelcomeTimeWidgetState extends State<WelcomeTimeWidget> {
 
   void goHome() {
     LogUtils.e('计时完成，去首页');
+    NavigatorUtils.pushPageByFade(
+      context: context,
+      targetPage: HomePage(),
+      isReplace: true,
+    );
   }
 }
