@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/pages/home/list_item_widget.dart';
 
 class HomeItemPage extends StatefulWidget {
   // 用于标识当前是哪个页面
@@ -13,14 +14,16 @@ class HomeItemPage extends StatefulWidget {
 class _HomeItemPageState extends State<HomeItemPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Column(
-        children: [
-          SizedBox(height: 100),
-          Text('当前页面： ${widget.flag}'),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(''),
+      ),
+      backgroundColor: Colors.grey[200],
+      body: ListView.builder(
+        itemCount: 100,
+        itemBuilder: (BuildContext context, int index) {
+          return ListViewItemWidget();
+        },
       ),
     );
   }
