@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/pages/home/list_item2_widget.dart';
 import 'package:flutter_ho/src/pages/home/list_item_widget.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:video_player/video_player.dart';
@@ -72,13 +73,24 @@ class _HomeItemPageState extends State<HomeItemPage> {
 
           itemCount: 100,
           itemBuilder: (BuildContext context, int index) {
-            return ListViewItemWidget(
-              isScroll: _isScroll,
-              streamController: _streamController,
-            );
+            return buildListItemFunction();
           },
         ),
       ),
     );
+  }
+
+  Widget buildListItemFunction() {
+    if (widget.flag == 1) {
+      return ListViewItemWidget(
+        isScroll: _isScroll,
+        streamController: _streamController,
+      );
+    } else {
+      return ListViewItem2Widget(
+        isScroll: _isScroll,
+        streamController: _streamController,
+      );
+    }
   }
 }
