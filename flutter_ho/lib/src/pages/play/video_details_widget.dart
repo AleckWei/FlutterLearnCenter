@@ -86,6 +86,16 @@ class _VideoDetailWidgetState extends State<VideoDetailWidget> {
                 // 在根布局中就可以用全局流控制器来控制它们的暂停了
                 widget.streamController.add(_controller);
               }
+              // 获取视频播放的进度
+              Duration position = _controller.value.position;
+              // 获取视频的总长度
+              Duration length = _controller.value.duration;
+
+              if (position == length) {
+                // 当视频播放完毕之后，就将进度放回到视频的开头
+                _controller.seekTo(Duration.zero);
+              }
+              // 开始播放视频
               _controller.play();
               setState(() {});
             },
