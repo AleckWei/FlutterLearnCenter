@@ -20,6 +20,10 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   // 是否需要隐藏控制层（当视频播放时，需要隐藏掉）
   bool _isPlay = false;
 
+  // 用于标识是返回播放中进度，还是返回视频总时长
+  static bool playing = true;
+  static bool total = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,7 +37,12 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
     _controller.addListener(() {
       if (_isPlay && !_controller.value.isPlaying) {
         _isPlay = false;
+        setState(() {});
       }
+      Duration duration = _controller.value.position;
+      Duration totalDuration = _controller.value.duration;
+
+      _currentSlider = duration.inMicroseconds / totalDuration.inMicroseconds;
       setState(() {});
     });
   }
@@ -42,6 +51,9 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   void dispose() {
     // 页面销毁时，销毁一下视频控制器，释放一下资源
     _controller.dispose();
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
     super.dispose();
   }
 
@@ -70,52 +82,83 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
     );
   }
 
+  Timer _timer;
+  double _opacity = 1.0;
+
   Widget buildController() {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: Container(
-            // 设置颜色以及透明度
-            color: Colors.blueGrey.withOpacity(0.5),
-            child: GestureDetector(
-              child: Icon(Icons.play_circle_fill, size: 44),
-              onTap: () {
-                startPlayVideo();
-              },
+    // 控制层最外层的动态显示/消失控件层
+    return AnimatedOpacity(
+      opacity: _opacity,
+      duration: Duration(milliseconds: 500),
+      child: GestureDetector(
+        onTap: () {
+          // 监听触摸，将控制层显示/隐藏
+
+          setState(() {
+            _opacity = _opacity == 1 ? 0 : 1;
+          });
+          HideControllerAfterTime(3000);
+        },
+        child: Stack(
+          children: [
+            // 控件中心的 播放/暂停 按钮
+            Positioned.fill(
+              child: Container(
+                // 设置颜色以及透明度
+                color: Colors.grey.withOpacity(0.4),
+                child: GestureDetector(
+                  child: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause_circle_filled
+                          : Icons.play_circle_fill,
+                      size: 44),
+                  onTap: () {
+                    setState(() {
+                      _opacity = 1;
+                    });
+                    if (_controller.value.isPlaying) {
+                      endPlayVideo();
+                    } else {
+                      startPlayVideo();
+                    }
+                    HideControllerAfterTime(3000);
+                  },
+                ),
+              ),
             ),
-          ),
-        ),
-        // 顶部对齐的文字
-        Positioned(
-          top: 10,
-          left: 10,
-          right: 10,
-          height: 44,
-          child: Text(
-            '帅么么',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-              fontSize: 18,
+            // 顶部对齐的文字
+            Positioned(
+              top: 10,
+              left: 10,
+              right: 10,
+              height: 44,
+              child: Text(
+                '帅么么',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
             ),
-          ),
+            // 底部的滑动条
+            Positioned(
+              bottom: 10,
+              left: 10,
+              right: 10,
+              height: 60,
+              child: buildBottomController(),
+            ),
+          ],
         ),
-        // 底部的滑动条
-        Positioned(
-          bottom: 10,
-          left: 10,
-          right: 10,
-          height: 60,
-          child: buildBottomController(),
-        ),
-      ],
+      ),
     );
   }
 
   ///开始播放视频
   void startPlayVideo() {
     _isPlay = true;
-    // 需要先暂停，再播放
+    // 需要先全局暂停，再播放
     if (widget.streamController != null) {
       // 这里将item当中的视频控制器传给流控制器
       // 在根布局中就可以用全局流控制器来控制它们的暂停了
@@ -135,28 +178,89 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
     setState(() {});
   }
 
+  ///暂停播放视频
+  void endPlayVideo() {
+    _controller.pause();
+    _isPlay = false;
+  }
+
+  ///进度条的百分比
   double _currentSlider = 0.0;
 
   Widget buildBottomController() {
     return Row(
       children: [
-        Text('00:00', style: TextStyle(fontSize: 14, color: Colors.white)),
+        Text(VideoTime(playing),
+            style: TextStyle(fontSize: 14, color: Colors.white)),
         Expanded(
           child: Slider(
             // 滑动条当前的进度
             value: _currentSlider,
             // 滑动条滑动触发的回调
             onChanged: (value) {
+              // value进度，相当于传了个%回来
               setState(() {
                 _currentSlider = value;
+                _controller.seekTo(_controller.value.duration * value);
+                _opacity = 1;
               });
+              HideControllerAfterTime(3000);
             },
             min: 0,
             max: 1,
+            // 后面未播放进度的进度条的颜色
+            inactiveColor: Colors.white,
+            // 前面播放过的进度条的颜色
+            activeColor: Colors.blueAccent,
           ),
         ),
-        Text('00:00', style: TextStyle(fontSize: 14, color: Colors.white)),
+        Text(VideoTime(total),
+            style: TextStyle(fontSize: 14, color: Colors.white)),
       ],
     );
+  }
+
+  ///在sec毫秒之后隐藏控制层
+  // ignore: non_constant_identifier_names
+  void HideControllerAfterTime(int sec) {
+    if (_controller.value.isPlaying) {
+      _timer = Timer(Duration(milliseconds: sec), () {
+        _opacity = 0;
+      });
+    } else {
+      if (_timer.isActive) {
+        _timer.cancel();
+      }
+    }
+  }
+
+  ///返回时间的值
+  // ignore: non_constant_identifier_names
+  String VideoTime(bool playingOrTotal) {
+    Duration duration;
+    if (playingOrTotal) {
+      duration = _controller.value.position;
+    } else {
+      duration = _controller.value.duration;
+    }
+
+    int m = 0;
+    int s = duration.inSeconds; // 这里返回的是视频的总秒数
+
+    if (s > 60) {
+      m = (s ~/ 60).round(); //a~/b a÷b之后向下取整
+      s = s % 60;
+    }
+    String mStr = '$m';
+    String sStr = '$s';
+
+    if (m < 10) {
+      mStr = '0$m';
+    }
+
+    if (s < 10) {
+      sStr = '0$s';
+    }
+    return '$mStr:$sStr';
   }
 }
