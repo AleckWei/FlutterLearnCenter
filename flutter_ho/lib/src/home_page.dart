@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/pages/home/home_item_page.dart';
+import 'package:flutter_ho/src/pages/mine/mine_main_page.dart';
 
 // 首页面
 class HomePage extends StatefulWidget {
@@ -27,7 +28,8 @@ class _HomePageState extends State<HomePage> {
             HomeItemPage(1),
             HomeItemPage(2),
             HomeItemPage(3),
-            HomeItemPage(4),
+            // 个人中心页面
+            MineMainPage(),
           ],
         ),
       ),
