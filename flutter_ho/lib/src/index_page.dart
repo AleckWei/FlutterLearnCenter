@@ -144,11 +144,12 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
     // 引导 页面 or
     // 判断用户是不是第一次安装应用
     bool isFirstInstall = await SPUtils.getBool("flutter_ho_is_first_install");
-    if (isFirstInstall == null) {
+    if (isFirstInstall == null || isFirstInstall == true) {
       // 如果为null，则是第一次安装应用
       // 引导页面
       NavigatorUtils.pushPageByFade(
           context: context, targetPage: FirstGuidePage(), isReplace: true);
+      SPUtils.save("flutter_ho_is_first_install", false);
     } else {
       //  倒计时页面
       NavigatorUtils.pushPageByFade(
