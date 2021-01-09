@@ -20,9 +20,7 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   // 是否需要隐藏控制层（当视频播放时，需要隐藏掉）
   bool _isPlay = false;
 
-  // 用于标识是返回播放中进度，还是返回视频总时长
-  static bool playing = true;
-  static bool total = false;
+
 
   @override
   void initState() {
@@ -34,16 +32,24 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
         setState(() {});
       });
 
+    // 视频播放的实时更新
     _controller.addListener(() {
       if (_isPlay && !_controller.value.isPlaying) {
         _isPlay = false;
         setState(() {});
       }
+      // 视频播放的当前时间
       Duration currentDuration = _controller.value.position;
+      // 视频的总时长
       Duration totalDuration = _controller.value.duration;
 
-      _currentSlider = currentDuration.inMicroseconds / totalDuration.inMicroseconds;
-      setState(() {});
+      // 滑动条的进度
+      _currentSlider =
+          currentDuration.inMicroseconds / totalDuration.inMicroseconds;
+
+      if (_opacity == 1.0) {
+        _streamController.add(0);
+      }
     });
   }
 
@@ -51,6 +57,7 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   void dispose() {
     // 页面销毁时，销毁一下视频控制器，释放一下资源
     _controller.dispose();
+    _streamController.close();
     if (_timer.isActive) {
       _timer.cancel();
     }
@@ -77,18 +84,20 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
         ),
 
         //  第二层控制按钮
-        buildController(),
+        buildControllerWidget(),
       ],
     );
   }
 
   Timer _timer;
   double _opacity = 1.0;
+  bool _isFirst = true;
 
-  Widget buildController() {
+  Widget buildControllerWidget() {
     // 控制层最外层的动态显示/消失控件层
     return AnimatedOpacity(
       opacity: _opacity,
+      // 过渡时间
       duration: Duration(milliseconds: 500),
       child: GestureDetector(
         onTap: () {
@@ -106,11 +115,30 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
                 // 设置颜色以及透明度
                 color: Colors.grey.withOpacity(0.4),
                 child: GestureDetector(
-                  child: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause_circle_filled
-                          : Icons.play_circle_fill,
-                      size: 44),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipOval(
+                        child: Container(
+                          width: 54,
+                          height: 54,
+                          decoration: BoxDecoration(
+                            gradient: RadialGradient(colors: [
+                              Colors.black,
+                              Colors.black.withOpacity(0.3),
+                            ]),
+                          ),
+                          child: Icon(
+                            _controller.value.isPlaying
+                                ? Icons.pause
+                                : Icons.play_arrow_sharp,
+                            size: 33,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   onTap: () {
                     setState(() {
                       _opacity = 1;
@@ -157,6 +185,8 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   ///开始播放视频
   void startPlayVideo() {
     _isPlay = true;
+    // 当不是第一次播放时，进度条部分显示一个Container
+    _isFirst = false;
     // 需要先全局暂停，再播放
     if (widget.streamController != null) {
       // 这里将item当中的视频控制器传给流控制器
@@ -185,39 +215,52 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
 
   ///进度条的百分比
   double _currentSlider = 0.0;
+  StreamController _streamController = new StreamController();
+
+  // 用于标识是返回播放中进度，还是返回视频总时长
+  static bool playing = true;
+  static bool total = false;
 
   Widget buildBottomController() {
-    return Row(
-      children: [
-        Text(VideoTime(playing),
-            style: TextStyle(fontSize: 14, color: Colors.white)),
-        Expanded(
-          child: Slider(
-            // 滑动条当前的进度
-            value: _currentSlider,
-            // 滑动条滑动触发的回调
-            onChanged: (value) {
-              // value进度，相当于传了个%回来
-              setState(() {
-                _currentSlider = value;
-                // 滑动条控制
-                _controller.seekTo(_controller.value.duration * value);
-                _opacity = 1;
-              });
-              HideControllerAfterTime(3000);
-            },
-            min: 0,
-            max: 1,
-            // 后面未播放进度的进度条的颜色
-            inactiveColor: Colors.white,
-            // 前面播放过的进度条的颜色
-            activeColor: Colors.blueAccent,
+    if (_isFirst) {
+      // 当不是第一次播放时，进度条部分显示一个Container
+      // 避免出现一开始空指针异常的情况
+      return Container();
+    }
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot<dynamic> currentSummary) {
+      return Row(
+        children: [
+          Text(VideoTime(playing),
+              style: TextStyle(fontSize: 14, color: Colors.white)),
+          Expanded(
+            child: Slider(
+              // 滑动条当前的进度
+              value: _currentSlider,
+              // 滑动条滑动触发的回调
+              onChanged: (value) {
+                // value进度，相当于传了个%回来
+                setState(() {
+                  _currentSlider = value;
+                  // 滑动条控制
+                  _controller.seekTo(_controller.value.duration * value);
+                  _opacity = 1;
+                });
+                HideControllerAfterTime(3000);
+              },
+              min: 0,
+              max: 1,
+              // 后面未播放进度的进度条的颜色
+              inactiveColor: Colors.white,
+              // 前面播放过的进度条的颜色
+              activeColor: Colors.blueAccent,
+            ),
           ),
-        ),
-        Text(VideoTime(total),
-            style: TextStyle(fontSize: 14, color: Colors.white)),
-      ],
-    );
+          Text(VideoTime(total),
+              style: TextStyle(fontSize: 14, color: Colors.white)),
+        ],
+      );
+    });
   }
 
   ///在sec毫秒之后隐藏控制层
@@ -225,7 +268,9 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
   void HideControllerAfterTime(int sec) {
     if (_controller.value.isPlaying) {
       _timer = Timer(Duration(milliseconds: sec), () {
-        _opacity = 0;
+        setState(() {
+          _opacity = 0;
+        });
       });
     } else {
       if (_timer.isActive) {
