@@ -1,19 +1,19 @@
 import 'dart:convert';
-import 'package:flutter_ho/src/utils/log_utils.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SPUtils {
-  // 静态实例
+  ///静态实例
   static SharedPreferences _sharedPreferences;
 
-  // 应用启动时需要调用
-  // 初始化
+  ///应用启动时需要调用
+  ///初始化
   static Future<bool> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
     return true;
   }
 
-  // 按照key来删除某个数据
+  //清除数据
   static void remove(String key) async {
     if (_sharedPreferences.containsKey(key)) {
       _sharedPreferences.remove(key);
@@ -35,68 +35,53 @@ class SPUtils {
     }
   }
 
-  // 异步读取数据
-  static bool getBool(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      return _sharedPreferences.getBool(key);
-    } else {
-      LogUtils.e("获取Bool，没有key:$key");
-    }
-    return null;
+  // 异步读取
+  static Future<String> getString(String key) async {
+    return _sharedPreferences.getString(key);
   }
 
-  static double getDouble(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      return _sharedPreferences.getDouble(key);
-    } else {
-      LogUtils.e("获取Double，没有key:$key");
-    }
-    return null;
+  static Future<int> getInt(String key) async {
+    return _sharedPreferences.getInt(key);
   }
 
-  static int getInt(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      return _sharedPreferences.getInt(key);
-    } else {
-      LogUtils.e("获取Int，没有key:$key");
-    }
-    return null;
+  static Future<bool> getBool(String key) async {
+    return _sharedPreferences.getBool(key);
   }
 
-  static String getString(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      return _sharedPreferences.getString(key);
-    } else {
-      LogUtils.e("获取String，没有key:$key");
-    }
-    return null;
+  static Future<double> getDouble(String key) async {
+    return _sharedPreferences.getDouble(key);
   }
 
-  static List<String> getStringList(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      return _sharedPreferences.getStringList(key);
-    } else {
-      LogUtils.e("获取StringList，没有key: $key");
-    }
-    return null;
+  ///保存自定义对象
+  static Future saveObject(String key, dynamic value) async {
+    ///通过 json 将Object对象编译成String类型保存
+    _sharedPreferences.setString(key, json.encode(value));
   }
 
-  // 保存自定义对象
-  // ignore: non_constant_identifier_names
-  static Future saveObject(String key, dynamic Obj) async {
-    _sharedPreferences.setString(key, json.encode(Obj));
-  }
-
-  // 获取自定义对象
+  ///获取自定义对象
+  ///返回的是 Map<String,dynamic> 类型数据
   static dynamic getObject(String key) {
-    if (_sharedPreferences.containsKey(key)) {
-      String _data = _sharedPreferences.getString(key);
-      return (_data == null || _data.isEmpty) ? null : json.decode(_data);
-    } else {
-      LogUtils.e("获取自定义对象，没有key：$key");
-    }
-    return null;
+    String _data = _sharedPreferences.getString(key);
+    return (_data == null || _data.isEmpty) ? null : json.decode(_data);
   }
 
+  ///保存列表数据
+  static Future<bool> putObjectList(String key, List<Object> list) {
+    ///将Object的数据类型转换为String类型
+    List<String> _dataList = list?.map((value) {
+      return json.encode(value);
+    })?.toList();
+    return _sharedPreferences.setStringList(key, _dataList);
+  }
 
+  ///获取对象集合数据
+  ///返回的是List<Map<String,dynamic>>类型
+  static List<Map> getObjectList(String key) {
+    if (_sharedPreferences == null) return null;
+    List<String> dataLis = _sharedPreferences.getStringList(key);
+    return dataLis?.map((value) {
+      Map _dataMap = json.decode(value);
+      return _dataMap;
+    })?.toList();
+  }
 }

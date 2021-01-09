@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ho/src/first_guide_page.dart';
 import 'package:flutter_ho/src/pages/common/protocol_model.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
@@ -113,7 +114,7 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
     await SPUtils.init();
 
     // 先读取一下是否有同意隐私协议的标识
-    bool isAgreement = SPUtils.getBool("isAgreement");
+    bool isAgreement = await SPUtils.getBool("isAgreement");
     LogUtils.e("isAgreement: $isAgreement");
 
     if (isAgreement == null || !isAgreement) {
@@ -139,13 +140,19 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
     SystemChannels.platform.invokeMapMethod("SystemNavigator.pop");
   }
 
-  void next() {
-    //  引导 页面 or
-    //  倒计时页面
-    NavigatorUtils.pushPageByFade(
-      context: context,
-      targetPage: WelcomePage(),
-      isReplace: true,
-    );
+  void next() async {
+    // 引导 页面 or
+    // 判断用户是不是第一次安装应用
+    bool isFirstInstall = await SPUtils.getBool("flutter_ho_is_first_install");
+    if (isFirstInstall == null) {
+      // 如果为null，则是第一次安装应用
+      // 引导页面
+      NavigatorUtils.pushPageByFade(
+          context: context, targetPage: FirstGuidePage(), isReplace: true);
+    } else {
+      //  倒计时页面
+      NavigatorUtils.pushPageByFade(
+          context: context, targetPage: WelcomePage(), isReplace: true);
+    }
   }
 }
