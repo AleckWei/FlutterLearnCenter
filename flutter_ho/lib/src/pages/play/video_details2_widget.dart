@@ -39,10 +39,10 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
         _isPlay = false;
         setState(() {});
       }
-      Duration duration = _controller.value.position;
+      Duration currentDuration = _controller.value.position;
       Duration totalDuration = _controller.value.duration;
 
-      _currentSlider = duration.inMicroseconds / totalDuration.inMicroseconds;
+      _currentSlider = currentDuration.inMicroseconds / totalDuration.inMicroseconds;
       setState(() {});
     });
   }
@@ -93,7 +93,6 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
       child: GestureDetector(
         onTap: () {
           // 监听触摸，将控制层显示/隐藏
-
           setState(() {
             _opacity = _opacity == 1 ? 0 : 1;
           });
@@ -201,6 +200,7 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
               // value进度，相当于传了个%回来
               setState(() {
                 _currentSlider = value;
+                // 滑动条控制
                 _controller.seekTo(_controller.value.duration * value);
                 _opacity = 1;
               });
