@@ -9,6 +9,7 @@ class FirstGuidePage extends StatefulWidget {
 }
 
 class _FirstGuidePageState extends State<FirstGuidePage> {
+  // 当前页面的下标
   int _currentIndex = 0;
 
   @override

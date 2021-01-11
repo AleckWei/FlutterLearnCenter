@@ -151,7 +151,7 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
           context: context, targetPage: FirstGuidePage(), isReplace: true);
       SPUtils.save("flutter_ho_is_first_install", false);
     } else {
-      //  倒计时页面
+      //  正常进入的倒计时页面
       NavigatorUtils.pushPageByFade(
           context: context, targetPage: WelcomePage(), isReplace: true);
     }

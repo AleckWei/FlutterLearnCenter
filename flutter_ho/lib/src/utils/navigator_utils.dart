@@ -44,12 +44,13 @@ class NavigatorUtils {
   ///[context] 上下文对象
   ///[targetPage] 目标页面
   ///[isReplace] 是否替换当前页面
-  ///[opaque] 是否以透明背景的形式打
+  ///[opaque] 是否以透明背景的形式打开
   static void pushPageByFade({
     @required BuildContext context,
     @required Widget targetPage,
     bool isReplace = false,
     bool opaque = false,
+    int startMills = 400,
     Function(dynamic value) dismissCallBack,
   }) {
     PageRoute pageRoute = PageRouteBuilder(
@@ -58,6 +59,8 @@ class NavigatorUtils {
             Animation<double> secondaryAnimation) {
           return targetPage;
         },
+        // 过渡动画需要的时间
+        transitionDuration: Duration(milliseconds: startMills),
 
         // 构建动画
         transitionsBuilder: (BuildContext context, Animation<double> animation,
