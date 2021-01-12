@@ -1,9 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/bean/bean_user.dart';
+import 'package:flutter_ho/src/net/dio_utils.dart';
+import 'package:flutter_ho/src/net/http_helper.dart';
+import 'package:flutter_ho/src/pages/common/user_helper.dart';
 import 'package:flutter_ho/src/pages/login/bubble_bg/bubble_widget.dart';
 import 'package:flutter_ho/src/pages/login/custom_textfield_wiget.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
+import 'package:flutter_ho/src/utils/toast_utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -48,7 +53,16 @@ class _LoginPageState extends State<LoginPage> {
                   // 手机号
                   TextFieldWidget(
                     hintText: '手机号',
-                    submit: (val) {},
+                    submit: (val) {
+                      if (val.length != 11) {
+                        ToastUtils.showToast("请输入11位手机号");
+                        FocusScope.of(context)
+                            .requestFocus(_phoneNumberFocusNode);
+                        return;
+                      }
+                      _phoneNumberFocusNode.unfocus();
+                      FocusScope.of(context).requestFocus(_passwordFocusNode);
+                    },
                     focusNode: _phoneNumberFocusNode,
                     prefixIconData: Icons.smartphone_sharp,
                     controller: _userPhoneEditController,
@@ -63,7 +77,16 @@ class _LoginPageState extends State<LoginPage> {
                   // 密码
                   TextFieldWidget(
                     hintText: '密码',
-                    submit: (val) {},
+                    submit: (val) {
+                      if (val.length < 6) {
+                        ToastUtils.showToast('请输入6位数以上的密码');
+                        FocusScope.of(context).requestFocus(_passwordFocusNode);
+                        return;
+                      }
+                      _phoneNumberFocusNode.unfocus();
+                      _passwordFocusNode.unfocus();
+                      submitFunction();
+                    },
                     focusNode: _passwordFocusNode,
                     prefixIconData: Icons.lock_open_outlined,
                     suffixIconData:
@@ -87,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(fontSize: 18),
                       ),
                       onPressed: () {
+                        submitFunction();
                         LogUtils.e('点击了登录');
                       },
                     ),
@@ -205,5 +229,61 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _phoneNumberFocusNode.unfocus();
+    _passwordFocusNode.unfocus();
+    super.dispose();
+  }
+
+  void submitFunction() async {
+    // 获取用户名
+    String userPhone = _userPhoneEditController.text;
+    String userPsw = _userPswEditController.text;
+
+    // 获取到用户名后去除空格再做一次判断
+    if (userPhone.trim().length != 11) {
+      ToastUtils.showToast('请输入11位手机号！');
+      return;
+    }
+
+    // 获取到密码后去除空格再做一次判断
+    if (userPsw.trim().length < 6) {
+      ToastUtils.showToast('请输入6位以上密码');
+      return;
+    }
+
+    Map<String, dynamic> map = {
+      "mobile": userPhone,
+      "password": userPsw,
+    };
+
+    // ResponseInfo responseInfo = await DioUtils.instance.postRequest(url: HttpHelper.login,formDataMap: map);
+    // 模拟登录成功
+    ResponseInfo responseInfo = await Future.delayed(
+      Duration(milliseconds: 1000),
+      () {
+        return ResponseInfo(
+          data: {
+            "mobile": "测试数据",
+            "password": 12345678,
+          },
+        );
+      },
+    );
+
+    if(responseInfo.success) {
+      UserBean userBean = UserBean.fromMap(responseInfo.data);
+      UserHelper.getInstance.userBean = userBean;
+      ToastUtils.showToast("登录成功");
+      Navigator.of(context).pop(true);
+      // loginStreamController.add(0);
+    } else {
+      ToastUtils.showToast("${responseInfo.message}");
+    }
+
   }
 }

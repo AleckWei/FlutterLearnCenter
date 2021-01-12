@@ -20,6 +20,12 @@ dependencies:
   path_provider: ^1.6.24
   #  视频播放依赖包：
   video_player: ^1.0.1
+  #  提醒弹窗依赖包
+  fluttertoast: ^7.1.6
+  #  网络请求
+  dio: ^3.0.10
+  #  app相关信息
+  package_info: ^0.4.3+2
 
 dev_dependencies:
   flutter_test:

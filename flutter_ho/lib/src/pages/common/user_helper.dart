@@ -1,4 +1,5 @@
 import 'package:flutter_ho/src/bean/bean_user.dart';
+import 'package:flutter_ho/src/utils/sp_utils.dart';
 
 class UserHelper {
   //私有化构造函数
@@ -11,4 +12,23 @@ class UserHelper {
 
   // 依据是否有这个用户信息来判断用户是否已经登录
   bool get isLogin => _userBean != null; // userBean不为空时，表示用户已经登录
+
+  set userBean(UserBean userBean) {
+    _userBean = userBean;
+    SPUtils.saveObject("user_bean", _userBean);
+  }
+
+  get userBean => _userBean;
+
+  void init() {
+    Map<String, dynamic> map = SPUtils.getObject("user_bean");
+    if (map != null) {
+      _userBean = UserBean.fromMap(map);
+    }
+  }
+
+  void clear() {
+    _userBean = null;
+    SPUtils.remove("user_bean");
+  }
 }
