@@ -39,14 +39,21 @@ class _LoginPageState extends State<LoginPage> {
     return Positioned.fill(
       child: Container(
         decoration: BoxDecoration(
-            // 线性渐变
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
+          // 线性渐变
+          gradient: LinearGradient(
+            // 渐变开始的方向
+            begin: Alignment.topLeft,
+            // 渐变结束的方向
+            end: Alignment.bottomRight,
+            colors: [
+              // 渐变的颜色组，最少都要2种颜色
               Colors.lightBlueAccent.withOpacity(0.3),
               Colors.blue.withOpacity(0.3),
-            ])),
+              Colors.greenAccent.withOpacity(0.3),
+              Colors.yellowAccent.withOpacity(0.1),
+            ],
+          ),
+        ),
       ),
     );
   }
