@@ -14,7 +14,9 @@ class UserHelper {
   bool get isLogin => _userBean != null; // userBean不为空时，表示用户已经登录
 
   set userBean(UserBean userBean) {
+    // 将用户信息保存到app的运行内存当中
     _userBean = userBean;
+    // 将用户信息保存到手机的缓存中
     SPUtils.saveObject("user_bean", _userBean);
   }
 
@@ -23,6 +25,7 @@ class UserHelper {
   void init() {
     Map<String, dynamic> map = SPUtils.getObject("user_bean");
     if (map != null) {
+      // 加载缓存
       _userBean = UserBean.fromMap(map);
     }
   }

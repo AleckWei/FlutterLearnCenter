@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ho/src/pages/common/controller.dart';
 import 'package:flutter_ho/src/pages/common/user_helper.dart';
 import 'package:flutter_ho/src/pages/mine/mine_login_page.dart';
 import 'package:flutter_ho/src/pages/mine/mine_no_login_page.dart';
@@ -10,6 +11,15 @@ class MineMainPage extends StatefulWidget {
 }
 
 class _MineMainPageState extends State<MineMainPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginStreamController.stream.listen((event) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(

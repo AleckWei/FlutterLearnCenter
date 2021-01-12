@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/bean/bean_user.dart';
 import 'package:flutter_ho/src/net/dio_utils.dart';
 import 'package:flutter_ho/src/net/http_helper.dart';
+import 'package:flutter_ho/src/pages/common/controller.dart';
 import 'package:flutter_ho/src/pages/common/user_helper.dart';
 import 'package:flutter_ho/src/pages/login/bubble_bg/bubble_widget.dart';
 import 'package:flutter_ho/src/pages/login/custom_textfield_wiget.dart';
@@ -275,12 +276,17 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
+    // 响应成功
     if(responseInfo.success) {
+      // 解析数据
       UserBean userBean = UserBean.fromMap(responseInfo.data);
+      // 内存保存数据
       UserHelper.getInstance.userBean = userBean;
+      // toast提示
       ToastUtils.showToast("登录成功");
+      // 发送消息更新我的页面显示内容
       Navigator.of(context).pop(true);
-      // loginStreamController.add(0);
+      loginStreamController.add(0);
     } else {
       ToastUtils.showToast("${responseInfo.message}");
     }

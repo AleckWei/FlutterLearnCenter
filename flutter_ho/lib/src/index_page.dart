@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ho/src/first_guide_page.dart';
 import 'package:flutter_ho/src/pages/common/protocol_model.dart';
+import 'package:flutter_ho/src/pages/common/user_helper.dart';
 import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
 import 'package:flutter_ho/src/utils/sp_utils.dart';
@@ -116,6 +117,8 @@ class _IndexPageState extends State<IndexPage> with ProtocolModel {
     // 先读取一下是否有同意隐私协议的标识
     bool isAgreement = await SPUtils.getBool("isAgreement");
     LogUtils.e("isAgreement: $isAgreement");
+
+    UserHelper.getInstance.init();
 
     if (isAgreement == null || !isAgreement) {
       isAgreement = await showProtocolFunction(context);

@@ -11,14 +11,16 @@ class _MineLoginPageState extends State<MineLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(""),
+        title: Text("登录成功"),
       ),
       backgroundColor: Colors.white,
       body: Container(
         width: double.infinity,
         height: double.infinity,
         child: Column(
-          children: [],
+          children: [
+            Text('登录成功的页面'),
+          ],
         ),
       ),
     );

@@ -60,7 +60,7 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
     // 页面销毁时，销毁一下视频控制器，释放一下资源
     _controller.dispose();
     _streamController.close();
-    if (_timer.isActive) {
+    if (_timer !=null && _timer.isActive) {
       _timer.cancel();
     }
     super.dispose();
