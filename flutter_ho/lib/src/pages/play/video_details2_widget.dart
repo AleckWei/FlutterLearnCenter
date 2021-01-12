@@ -44,8 +44,10 @@ class _VideoDetail2WidgetState extends State<VideoDetail2Widget> {
       Duration totalDuration = _controller.value.duration;
 
       // 滑动条的进度
-      _currentSlider =
-          currentDuration.inMicroseconds / totalDuration.inMicroseconds;
+      if(currentDuration != null && totalDuration != null) {
+        _currentSlider =
+            currentDuration.inMicroseconds / totalDuration.inMicroseconds;
+      }
 
       if (_opacity == 1.0) {
         _streamController.add(0);

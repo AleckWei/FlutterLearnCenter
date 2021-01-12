@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/pages/login/bubble_bg/bubble_widget.dart';
+import 'package:flutter_ho/src/pages/login/custom_textfield_wiget.dart';
+import 'package:flutter_ho/src/utils/log_utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,6 +11,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FocusNode _phoneNumberFocusNode = new FocusNode();
+  FocusNode _passwordFocusNode = new FocusNode();
+
+  TextEditingController _userPhoneEditController = new TextEditingController();
+  TextEditingController _userPswEditController = new TextEditingController();
+
+  // 控制密码是否显示
+  bool _pwsShow = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +34,83 @@ class _LoginPageState extends State<LoginPage> {
             Positioned.fill(
               child: BubbleWidget(),
             ),
-            // 第2.5层 高斯模糊（装饰上一层的气泡）
+            // 第三层 高斯模糊（装饰上一层的气泡）
             buildCosmosWidget(),
-            // 第三层 logo
+            // 第四层 logo
             buildLogoWidget(),
-            // 第四层 输入框
+            // 第五层 输入框
+            Positioned(
+              left: 60,
+              right: 60,
+              bottom: 60,
+              child: Column(
+                children: [
+                  // 手机号
+                  TextFieldWidget(
+                    hintText: '手机号',
+                    submit: (val) {},
+                    focusNode: _phoneNumberFocusNode,
+                    prefixIconData: Icons.smartphone_sharp,
+                    controller: _userPhoneEditController,
+                    obscureText: false,
+                    onTap: () {
+                      setState(() {
+                        _pwsShow = !_pwsShow;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 40),
+                  // 密码
+                  TextFieldWidget(
+                    hintText: '密码',
+                    submit: (val) {},
+                    focusNode: _passwordFocusNode,
+                    prefixIconData: Icons.lock_open_outlined,
+                    suffixIconData:
+                        _pwsShow ? Icons.visibility_off : Icons.visibility,
+                    obscureText: _pwsShow,
+                    controller: _userPswEditController,
+                    onTap: () {
+                      setState(() {
+                        _pwsShow = !_pwsShow;
+                      });
+                    },
+                  ),
+                  SizedBox(height: 40),
+                  // 登录
+                  Container(
+                    width: double.infinity,
+                    height: 44,
+                    child: ElevatedButton(
+                      child: Text(
+                        '登录',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        LogUtils.e('点击了登录');
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  // 注册
+                  Container(
+                    width: double.infinity,
+                    height: 44,
+                    child: ElevatedButton(
+                      child: Text(
+                        '注册',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        LogUtils.e('点击了注册');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // 第六层 关闭按钮
+            buildCloseButtonWidget(context),
           ],
         ),
       ),
@@ -107,6 +190,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // 左上角的关闭按钮
+  Positioned buildCloseButtonWidget(BuildContext context) {
+    return Positioned(
+      left: 10,
+      top: 64,
+      child: CloseButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }
