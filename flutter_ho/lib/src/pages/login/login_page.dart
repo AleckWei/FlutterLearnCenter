@@ -29,120 +29,42 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Stack(
-          children: [
-            // 第一层 背景
-            buildBackgroundWidget(),
-            // 第二层 气泡
-            Positioned.fill(
-              child: BubbleWidget(),
-            ),
-            // 第三层 高斯模糊（装饰上一层的气泡）
-            buildCosmosWidget(),
-            // 第四层 logo
-            buildLogoWidget(),
-            // 第五层 输入框
-            Positioned(
-              left: 60,
-              right: 60,
-              bottom: 60,
-              child: Column(
-                children: [
-                  // 手机号
-                  TextFieldWidget(
-                    hintText: '手机号',
-                    submit: (val) {
-                      if (val.length != 11) {
-                        ToastUtils.showToast("请输入11位手机号");
-                        FocusScope.of(context)
-                            .requestFocus(_phoneNumberFocusNode);
-                        return;
-                      }
-                      _phoneNumberFocusNode.unfocus();
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                    focusNode: _phoneNumberFocusNode,
-                    prefixIconData: Icons.smartphone_sharp,
-                    controller: _userPhoneEditController,
-                    obscureText: false,
-                    onTap: () {
-                      setState(() {
-                        _pwsShow = !_pwsShow;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 40),
-                  // 密码
-                  TextFieldWidget(
-                    hintText: '密码',
-                    submit: (val) {
-                      if (val.length < 6) {
-                        ToastUtils.showToast('请输入6位数以上的密码');
-                        FocusScope.of(context).requestFocus(_passwordFocusNode);
-                        return;
-                      }
-                      _phoneNumberFocusNode.unfocus();
-                      _passwordFocusNode.unfocus();
-                      submitFunction();
-                    },
-                    focusNode: _passwordFocusNode,
-                    prefixIconData: Icons.lock_open_outlined,
-                    suffixIconData:
-                        _pwsShow ? Icons.visibility_off : Icons.visibility,
-                    obscureText: _pwsShow,
-                    controller: _userPswEditController,
-                    onTap: () {
-                      setState(() {
-                        _pwsShow = !_pwsShow;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 40),
-                  // 登录
-                  Container(
-                    width: double.infinity,
-                    height: 44,
-                    child: ElevatedButton(
-                      child: Text(
-                        '登录',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        submitFunction();
-                        LogUtils.e('点击了登录');
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // 注册
-                  Container(
-                    width: double.infinity,
-                    height: 44,
-                    child: ElevatedButton(
-                      child: Text(
-                        '注册',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        LogUtils.e('点击了注册');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // 第六层 关闭按钮
-            buildCloseButtonWidget(context),
-          ],
-        ),
+        child: buildStackWidget(context),
       ),
     );
   }
 
-  // 背景层
+  // 构成主页面的层叠布局
+  Container buildStackWidget(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          // 第一层 背景
+          buildBackgroundWidget(),
+          // 第二层 气泡
+          Positioned.fill(
+            child: BubbleWidget(),
+          ),
+          // 第三层 高斯模糊（装饰上一层的气泡）
+          buildCosmosWidget(),
+          // 第四层 logo
+          buildLogoWidget(),
+          // 第五层 输入框
+          buildInputWidget(context),
+          // 第六层 关闭按钮
+          buildCloseButtonWidget(context),
+        ],
+      ),
+    );
+  }
+
+  // 1.背景层
   Positioned buildBackgroundWidget() {
     return Positioned.fill(
       child: Container(
@@ -166,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // 高斯模糊层
+  // 3.高斯模糊层
   Positioned buildCosmosWidget() {
     return Positioned.fill(
       child: BackdropFilter(
@@ -181,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // logo与“欢迎登陆”层
+  // 4.logo与“欢迎登陆”层
   Positioned buildLogoWidget() {
     return Positioned(
       top: 120,
@@ -219,7 +141,98 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // 左上角的关闭按钮
+  // 5.输入框
+  Positioned buildInputWidget(BuildContext context) {
+    return Positioned(
+      left: 60,
+      right: 60,
+      bottom: 60,
+      child: Column(
+        children: [
+          // 手机号
+          TextFieldWidget(
+            hintText: '手机号',
+            submit: (val) {
+              if (val.length != 11) {
+                ToastUtils.showToast("请输入11位手机号");
+                FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+                return;
+              }
+              _phoneNumberFocusNode.unfocus();
+              FocusScope.of(context).requestFocus(_passwordFocusNode);
+            },
+            focusNode: _phoneNumberFocusNode,
+            prefixIconData: Icons.smartphone_sharp,
+            controller: _userPhoneEditController,
+            obscureText: false,
+            onTap: () {
+              setState(() {
+                _pwsShow = !_pwsShow;
+              });
+            },
+          ),
+          SizedBox(height: 40),
+          // 密码
+          TextFieldWidget(
+            hintText: '密码',
+            submit: (val) {
+              if (val.length < 6) {
+                ToastUtils.showToast('请输入6位数以上的密码');
+                FocusScope.of(context).requestFocus(_passwordFocusNode);
+                return;
+              }
+              _phoneNumberFocusNode.unfocus();
+              _passwordFocusNode.unfocus();
+              submitFunction();
+            },
+            focusNode: _passwordFocusNode,
+            prefixIconData: Icons.lock_open_outlined,
+            suffixIconData: _pwsShow ? Icons.visibility_off : Icons.visibility,
+            obscureText: _pwsShow,
+            controller: _userPswEditController,
+            onTap: () {
+              setState(() {
+                _pwsShow = !_pwsShow;
+              });
+            },
+          ),
+          SizedBox(height: 40),
+          // 登录
+          Container(
+            width: double.infinity,
+            height: 44,
+            child: ElevatedButton(
+              child: Text(
+                '登录',
+                style: TextStyle(fontSize: 18),
+              ),
+              onPressed: () {
+                submitFunction();
+                LogUtils.e('点击了登录');
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+          // 注册
+          Container(
+            width: double.infinity,
+            height: 44,
+            child: ElevatedButton(
+              child: Text(
+                '注册',
+                style: TextStyle(fontSize: 18),
+              ),
+              onPressed: () {
+                LogUtils.e('点击了注册');
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 6.左上角的关闭按钮
   Positioned buildCloseButtonWidget(BuildContext context) {
     return Positioned(
       left: 10,
@@ -262,7 +275,10 @@ class _LoginPageState extends State<LoginPage> {
       "password": userPsw,
     };
 
-    // ResponseInfo responseInfo = await DioUtils.instance.postRequest(url: HttpHelper.login,formDataMap: map);
+    // ResponseInfo responseInfo = await DioUtils.instance.postRequest(
+    //   url: HttpHelper.login,
+    //   formDataMap: map,
+    // );
     // 模拟登录成功
     ResponseInfo responseInfo = await Future.delayed(
       Duration(milliseconds: 1000),
@@ -277,7 +293,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     // 响应成功
-    if(responseInfo.success) {
+    if (responseInfo.success) {
       // 解析数据
       UserBean userBean = UserBean.fromMap(responseInfo.data);
       // 内存保存数据
@@ -290,6 +306,5 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       ToastUtils.showToast("${responseInfo.message}");
     }
-
   }
 }

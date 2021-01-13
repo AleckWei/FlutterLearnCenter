@@ -29,7 +29,7 @@ class _SettingPageState extends State<SettingPage> {
   ListTile buildLoginOutWidget() {
     bool isLogin = UserHelper.getInstance.isLogin;
     return ListTile(
-      title: Text(isLogin ? '退出登录' : '去登陆'),
+      title: Text(isLogin ? '退出登录' : '去登录'),
       // 右侧的图标（右箭头）
       trailing: Icon(Icons.arrow_forward_ios),
       // 左侧的图标（x）
@@ -57,11 +57,24 @@ class _SettingPageState extends State<SettingPage> {
           actions: [
             CupertinoDialogAction(
               child: Text('取消'),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            CupertinoDialogAction(
+              child: Text('退出'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
             ),
           ],
         );
       },
     );
+
+    if (isExit) {
+      UserHelper.getInstance.clear();
+      Navigator.of(context).pop(true);
+    }
   }
 }

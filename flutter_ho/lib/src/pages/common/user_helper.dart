@@ -31,7 +31,9 @@ class UserHelper {
   }
 
   void clear() {
+    // 首先移除app运行内存当中的UserBean
     _userBean = null;
+    // 然后将缓存当中的userBean给删掉
     SPUtils.remove("user_bean");
   }
 }

@@ -14,7 +14,16 @@ class _MineNoLoginPageState extends State<MineNoLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xffCDDEEC),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.lightBlueAccent.withOpacity(0.3),
+            Colors.greenAccent.withOpacity(0.3),
+          ],
+        ),
+      ),
       child: Stack(
         alignment: Alignment.center,
         children: [
