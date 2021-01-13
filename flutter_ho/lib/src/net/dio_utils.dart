@@ -80,6 +80,7 @@ class DioUtils {
   ///[url]请求的链接
   ///[queryParameters] 请求参数
   ///[cancelTag] 取消网络请求的标识
+  // ignore: missing_return
   Future<ResponseInfo> getRequest(
       {@required String url,
       Map<String, dynamic> queryParameters,
@@ -113,6 +114,11 @@ class DioUtils {
     }
   }
 
+  ///post请求
+  ///[url]请求链接
+  ///[formDataMap]请求的参数
+  ///[jsonMap]JSON格式的参数
+  // ignore: missing_return
   Future<ResponseInfo> postRequest(
       {@required String url,
       Map<String, dynamic> formDataMap,
