@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/pages/home/home_item3_page.dart';
 import 'package:flutter_ho/src/pages/home/home_item_page.dart';
 import 'package:flutter_ho/src/pages/mine/mine_main_page.dart';
 
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             HomeItemPage(1),
             HomeItemPage(2),
-            HomeItemPage(3),
+            HomeItem3Page(),
             // 个人中心页面
             MineMainPage(),
           ],
