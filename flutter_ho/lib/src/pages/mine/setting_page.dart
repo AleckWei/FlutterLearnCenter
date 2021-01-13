@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/pages/common/controller.dart';
 import 'package:flutter_ho/src/pages/common/user_helper.dart';
 import 'package:flutter_ho/src/pages/login/login_page.dart';
 import 'package:flutter_ho/src/utils/navigator_utils.dart';
@@ -10,6 +11,16 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginStreamController.stream.listen((event) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
