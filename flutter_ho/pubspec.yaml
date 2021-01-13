@@ -26,6 +26,13 @@ dependencies:
   dio: ^3.0.10
   #  app相关信息
   package_info: ^0.4.3+2
+  #  APP升级安装组件 Android中调用自动安装 apk的程序
+  #ios 调用打开APPStore
+  install_plugin_custom:
+    git:
+      url: https://github.com/zhaolongs/install_plugin_custom.git
+      ref: master
+
 
 dev_dependencies:
   flutter_test:
