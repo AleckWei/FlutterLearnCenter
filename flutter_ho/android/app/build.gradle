@@ -37,19 +37,39 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.flutter_ho"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+//        ndk {
+//            // 手机厂商基本都是基于以下3种内核构建app的
+//            // 所以过滤其他的内核，可以让apk搭建地更小
+//            abiFilters "armabi-v7a", "armabi-v8a", "armabi"
+//        }
+    }
+
+    signingConfigs {
+        app_key {
+            storeFile file("flutter_ho.jks")
+            storePassword "123456"
+            keyAlias "key"
+            keyPassword "123456"
+        }
+        app_debug_key {
+            storeFile file("flutter_ho.jks")
+            storePassword "123456"
+            keyAlias "key"
+            keyPassword "123456"
+        }
     }
 
     buildTypes {
+        debug{
+            signingConfig signingConfigs.app_key
+        }
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.app_key
         }
     }
 }
