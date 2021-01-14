@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ho/src/bean/bean_art.dart';
 
 class HomeItemArtWidget extends StatefulWidget {
-  // 文章名称
-  final String title;
+  final ArtBean artBean;
 
-  // 文章作者
-  final String author;
+  // // 文章名称
+  // final String title;
+  //
+  // // 文章作者
+  // final String author;
+  //
+  // // 文章的简介
+  // final String content;
+  //
+  // // 右侧占位图的图片资源
+  // final String imageUrl;
 
-  // 文章的简介
-  final String content;
-
-  // 右侧占位图的图片资源
-  final String imageUrl;
-
-  HomeItemArtWidget(
-      {this.title = "Flutter从0到1",
-      this.author = "wwj",
-      this.content = "天要做一个listViw的排版出来，很长很长很长很长很长很长很长很长"
-          "很长很长很长很长很长很长很长很长很长很长很长很长很长的内容",
-      this.imageUrl = "assets/images/ic_mylove.png"});
+  HomeItemArtWidget({this.artBean});
 
   @override
   _HomeItemArtWidgetState createState() => _HomeItemArtWidgetState();
@@ -68,7 +66,7 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
   Container buildTitleContainer() {
     return Container(
       child: Text(
-        widget.title,
+        "${widget.artBean.artTitle}",
         style: TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 18,
@@ -112,7 +110,7 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
           Icon(Icons.forward_10),
           SizedBox(width: 10),
           Text(
-            widget.author,
+            "${widget.artBean.userBean.userName}",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Color(0xff454645),
@@ -132,9 +130,9 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
       child: ClipRRect(
         // 圆角设置为4
         borderRadius: BorderRadius.all(Radius.circular(4)),
-        // 加载本地资源
-        child: Image.asset(
-          widget.imageUrl,
+        // 加载网络资源
+        child: Image.network(
+          "${widget.artBean.image}",
           width: 60,
           height: 60,
           fit: BoxFit.fill,
@@ -148,7 +146,7 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
     return Container(
       margin: EdgeInsets.only(top: 8),
       child: Text(
-        widget.content,
+        "${widget.artBean.artInfo}",
         style: TextStyle(
           fontSize: 14,
           color: Colors.grey[600],
@@ -163,7 +161,7 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
       margin: EdgeInsets.only(top: 8),
       child: Row(
         children: [
-          Text('100喜欢'),
+          Text('${widget.artBean.likeCount}个点赞'),
           Container(
             margin: EdgeInsets.only(left: 10, right: 10),
             width: 3,
@@ -175,7 +173,7 @@ class _HomeItemArtWidgetState extends State<HomeItemArtWidget> {
               ),
             ),
           ),
-          Text('17个评论'),
+          Text('${widget.artBean.commentCount}条评论'),
         ],
       ),
     );

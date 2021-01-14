@@ -1,7 +1,12 @@
 class UserBean {
   // 用户的数据模型
   String userName;
-  String userAge;
+  int userAge;
+
+  UserBean() {
+    userName = "作者名称";
+    userAge = 18;
+  }
 
   UserBean.fromMap(Map<String, dynamic> map) {
     this.userName = map["userName"];
