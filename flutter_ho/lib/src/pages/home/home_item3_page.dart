@@ -12,14 +12,18 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
     return Scaffold(
       appBar: AppBar(
         title: Text("我的文章列表"),
+        centerTitle: true,
       ),
       backgroundColor: Color(0xffCDDEEC),
       // 懒加载
       body: ListView.builder(
         // 列表的个数
-        itemCount: 120,
+        itemCount: 50,
         // 列表的子item的样式
         itemBuilder: (BuildContext context, int index) {
+          // 这个子widget可以传入
+          // 标题、作者、简介内容、右侧占位图资源
+          // 根据实际需要去配置
           return HomeItemArtWidget();
         },
       ),
