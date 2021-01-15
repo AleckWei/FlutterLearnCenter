@@ -51,6 +51,8 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
     );
   }
 
+  Map<String, dynamic> pageMap = new Map();
+
   // 模拟加载网络资源里的artBean数据
   Future loadingNetData() async {
     // 发起一个网络请求

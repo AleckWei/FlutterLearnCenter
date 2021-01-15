@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/net/log_interceptor.dart';
 import 'package:package_info/package_info.dart';
@@ -21,22 +22,19 @@ class DioUtils {
   // 网络代理地址
   String proxyIp = "192.168.0.107"; // 这里后面学会了自己搭建服务器的时候再更换对应ip
 
-  // 网络代理端口
+  //网络代理端口
   String proxyPort = "8888"; // 和ip同理
 
   DioUtils._internal() {
     BaseOptions options = new BaseOptions();
-    // 设置请求、发送、连接超时时间
-    options.connectTimeout = 20000; // 20s
-    options.receiveTimeout = 2 * 60 * 1000; // 2min
-    options.sendTimeout = 2 * 60 * 1000; // 2min
-
+    //请求时间
+    options.connectTimeout = 20000;
+    options.receiveTimeout = 2 * 60 * 1000;
+    options.sendTimeout = 2 * 60 * 1000;
     // 初始化
     _dio = new Dio(options);
-
-    // inProduction：
-    // 当为debug、profile环境时，为false
-    // 当为release环境时，为true
+    //当App运行在Release环境时，inProduction为true；
+    // 当App运行在Debug和Profile环境时，inProduction为false。
     bool inProduction = bool.fromEnvironment("dart.vm.product");
     if (!inProduction) {
       debugFunction();
@@ -51,20 +49,20 @@ class DioUtils {
   }
 
   void debugFunction() {
+    // 添加log
     _dio.interceptors.add(LogsInterceptors());
-
     // 配置代理
     if (isProxy) {
       _setupPROXY();
     }
   }
 
-  // 配置代理（这里的作用主要是用于给主机抓包使用的）
+  /// 配置代理
   void _setupPROXY() {
-    // 指定ip和端口
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.findProxy = (uri) {
+        //proxyIp 地址  proxyPort 端口
         return 'PROXY $proxyIp : $proxyPort';
       };
 
@@ -77,7 +75,7 @@ class DioUtils {
   }
 
   ///get请求
-  ///[url]请求的链接
+  ///[url] 请求链接
   ///[queryParameters] 请求参数
   ///[cancelTag] 取消网络请求的标识
   // ignore: missing_return
@@ -85,6 +83,7 @@ class DioUtils {
       {@required String url,
       Map<String, dynamic> queryParameters,
       CancelToken cancelTag}) async {
+    //发起get请求
     try {
       _dio.options = await buildOptions(_dio.options);
       _dio.options.headers["content-type"] = "application/json";
@@ -93,31 +92,35 @@ class DioUtils {
         queryParameters: queryParameters,
         cancelToken: cancelTag,
       );
+      //响应数据
       dynamic responseData = response.data;
+      //数据解析
       if (responseData is Map<String, dynamic>) {
+        //转换
         Map<String, dynamic> responseMap = responseData;
+        //
         int code = responseMap["code"];
         if (code == 200) {
-          // 业务代码处理正常
+          //业务代码处理正常
+          //获取数据
           dynamic data = responseMap["data"];
           return ResponseInfo(data: data);
         } else {
-          // 业务代码处理异常
+          //业务代码异常
           return ResponseInfo.error(
-            code: responseMap["code"],
-            message: responseMap["message"],
-          );
+              code: responseMap["code"], message: responseMap["message"]);
         }
       }
     } catch (e, s) {
+      //异常
       return errorController(e, s);
     }
   }
 
-  ///post请求
-  ///[url]请求链接
-  ///[formDataMap]请求的参数
-  ///[jsonMap]JSON格式的参数
+  /// post请求
+  ///[url] 请求链接
+  ///[formDataMap]formData 请求参数
+  ///[jsonMap]JSON格式
   // ignore: missing_return
   Future<ResponseInfo> postRequest(
       {@required String url,
@@ -130,13 +133,15 @@ class DioUtils {
     }
 
     _dio.options = await buildOptions(_dio.options);
-
+    // _dio.options.headers["content-type"]="multipart/form-data";
+    //发起post请求
     try {
       Response response = await _dio.post(
         url,
         data: form == null ? jsonMap : form,
         cancelToken: cancelTag,
       );
+      //响应数据
       dynamic responseData = response.data;
       if (responseData is Map<String, dynamic>) {
         Map<String, dynamic> responseMap = responseData;
@@ -159,10 +164,10 @@ class DioUtils {
   }
 
   Future<ResponseInfo> errorController(e, StackTrace s) {
-    ResponseInfo responseInfo = new ResponseInfo();
+    ResponseInfo responseInfo = ResponseInfo();
     responseInfo.success = false;
 
-    // 网络处理错误
+    //网络处理错误
     if (e is DioError) {
       DioError dioError = e;
       switch (dioError.type) {
@@ -176,26 +181,32 @@ class DioUtils {
           responseInfo.message = "响应超时";
           break;
         case DioErrorType.RESPONSE:
+          // 响应错误
           responseInfo.message = "响应错误";
           break;
         case DioErrorType.CANCEL:
+          // 取消操作
           responseInfo.message = "已取消";
           break;
         case DioErrorType.DEFAULT:
-          responseInfo.message = "网络请求错误";
+          // 默认自定义其他异常
+          responseInfo.message = "网络请求异常";
           break;
       }
     } else {
-      responseInfo.message = "其他错误";
+      //其他错误
+      responseInfo.message = "未知错误";
     }
+    responseInfo.success = false;
     return Future.value(responseInfo);
   }
 
   Future<BaseOptions> buildOptions(BaseOptions options) async {
-    // 请求header的配置
+    ///请求header的配置
     options.headers["productId"] = Platform.isAndroid ? "Android" : "IOS";
     options.headers["application"] = "coalx";
 
+    //获取当前App的版本信息
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String appName = packageInfo.appName;
     String packageName = packageInfo.packageName;

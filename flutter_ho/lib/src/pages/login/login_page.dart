@@ -17,10 +17,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // 手机号码输入焦点框
   FocusNode _phoneNumberFocusNode = new FocusNode();
+
+  // 密码输入焦点框
   FocusNode _passwordFocusNode = new FocusNode();
 
+  // 手机号码输入框控制器
   TextEditingController _userPhoneEditController = new TextEditingController();
+
+  // 密码输入框控制器
   TextEditingController _userPswEditController = new TextEditingController();
 
   // 控制密码是否显示
@@ -33,8 +39,20 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: buildStackWidget(context),
+        child: buildGestureDetectorOutSideBackground(context),
       ),
+    );
+  }
+
+  // 当点击最外层的时候，就将键盘收起来
+  Widget buildGestureDetectorOutSideBackground(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // 当点击输入框以外的地方，就将输入框隐藏
+        _phoneNumberFocusNode.unfocus();
+        _passwordFocusNode.unfocus();
+      },
+      child: buildStackWidget(context),
     );
   }
 
@@ -256,11 +274,12 @@ class _LoginPageState extends State<LoginPage> {
   void submitFunction() async {
     // 获取用户名
     String userPhone = _userPhoneEditController.text;
+    // 获取密码
     String userPsw = _userPswEditController.text;
 
     // 获取到用户名后去除空格再做一次判断
     if (userPhone.trim().length != 11) {
-      ToastUtils.showToast('请输入11位手机号！');
+      ToastUtils.showToast('请输入11位手机号');
       return;
     }
 
