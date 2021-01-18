@@ -52,13 +52,23 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
     );
   }
 
-  Map<String, dynamic> pageMap = new Map();
+  int _pageIndex = 1;
+  int _pageSize = 10;
 
   // 模拟加载网络资源里的artBean数据
   Future loadingNetData() async {
+    // 添加分页请求
+    Map<String, dynamic> pageMap = new Map();
+    // 当前页数
+    pageMap['pageIndex'] = _pageIndex;
+    // 每页大小
+    pageMap['pageSize'] = _pageSize;
+
     // 发起一个网络请求
-    ResponseInfo responseInfo =
-        await DioUtils.instance.getRequest(url: HttpHelper.artList);
+    ResponseInfo responseInfo = await DioUtils.instance.getRequest(
+      url: HttpHelper.artList,
+      queryParameters: pageMap,
+    );
     // 模拟网络请求返回的数据 （0.4s后返回数据）
     // ResponseInfo responseInfo =
     //     await Future.delayed(Duration(milliseconds: 400), () {

@@ -31,7 +31,13 @@ void handleGetMethod(HttpRequest request) {
   print('get请求收到数据：' + request.uri.toString());
 
   String request_str = request.uri.toString();
-  String interface = request_str.substring(1);
+  String interface;
+  if (request_str.indexOf('?') != -1) {
+    interface = request_str.substring(1, request_str.indexOf('?'));
+  } else {
+    interface = request_str.substring(1);
+  }
+
   print('接口名称：' + interface);
 
   String response_res = '{"code" : 404 , "message" : "暂时没有找到资源"}';
