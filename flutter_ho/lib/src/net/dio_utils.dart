@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
@@ -5,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ho/src/net/log_interceptor.dart';
+import 'package:flutter_ho/src/utils/log_utils.dart';
 import 'package:package_info/package_info.dart';
 
 class DioUtils {
@@ -28,7 +30,7 @@ class DioUtils {
   DioUtils._internal() {
     BaseOptions options = new BaseOptions();
     //请求时间
-    options.connectTimeout = 20000;
+    options.connectTimeout = 8000;
     options.receiveTimeout = 2 * 60 * 1000;
     options.sendTimeout = 2 * 60 * 1000;
     // 初始化
@@ -92,23 +94,24 @@ class DioUtils {
         queryParameters: queryParameters,
         cancelToken: cancelTag,
       );
-      //响应数据
-      dynamic responseData = response.data;
+
+      //响应数据，在这里将数据从json转换为map
+      Map<String, dynamic> responseData = json.decode(response.data);
+      LogUtils.e('响应数据' + responseData.toString());
+
       //数据解析
-      if (responseData is Map<String, dynamic>) {
-        //转换
-        Map<String, dynamic> responseMap = responseData;
-        //
-        int code = responseMap["code"];
+      if (responseData is Map<String, dynamic> && responseData != null) {
+        int code = responseData["code"];
         if (code == 200) {
           //业务代码处理正常
-          //获取数据
-          dynamic data = responseMap["data"];
+          dynamic data = responseData["data"];
           return ResponseInfo(data: data);
         } else {
           //业务代码异常
           return ResponseInfo.error(
-              code: responseMap["code"], message: responseMap["message"]);
+            code: responseData["code"],
+            message: responseData["message"],
+          );
         }
       }
     } catch (e, s) {
@@ -124,39 +127,42 @@ class DioUtils {
   // ignore: missing_return
   Future<ResponseInfo> postRequest(
       {@required String url,
-      Map<String, dynamic> formDataMap,
-      Map<String, dynamic> jsonMap,
+      Map<String, dynamic> queryParameters,
       CancelToken cancelTag}) async {
-    FormData form;
-    if (formDataMap != null) {
-      form = FormData.fromMap(formDataMap);
-    }
-
     _dio.options = await buildOptions(_dio.options);
+    String data = json.encode(queryParameters);
+    LogUtils.e('发送请求的参数：' + data);
     // _dio.options.headers["content-type"]="multipart/form-data";
     //发起post请求
     try {
       Response response = await _dio.post(
         url,
-        data: form == null ? jsonMap : form,
         cancelToken: cancelTag,
+        queryParameters: queryParameters,
       );
       //响应数据
-      dynamic responseData = response.data;
-      if (responseData is Map<String, dynamic>) {
-        Map<String, dynamic> responseMap = responseData;
-        int code = responseMap["code"];
+      Map<String, dynamic> responseData = json.decode(response.data);
+      LogUtils.e('响应数据' + responseData.toString());
+      // 响应数据{code: 200, data: {userName: wwj, age: 18}, message: }
+
+      if (responseData is Map<String, dynamic> && responseData != null) {
+        int code = responseData["code"];
         if (code == 200) {
           // 业务代码处理正常
-          dynamic data = responseMap["data"];
+          dynamic data = responseData["data"];
           return ResponseInfo(data: data);
         } else {
           // 业务代码处理异常
           return ResponseInfo.error(
-            code: responseMap["code"],
-            message: responseMap["message"],
+            code: responseData["code"],
+            message: responseData["message"],
           );
         }
+      } else if (responseData == null) {
+        return Future.value(ResponseInfo(success: false, message: '返回数据为空'));
+      } else {
+        return Future.value(
+            ResponseInfo(success: false, message: responseData["message"]));
       }
     } catch (e, s) {
       return errorController(e, s);
@@ -197,7 +203,6 @@ class DioUtils {
       //其他错误
       responseInfo.message = "未知错误";
     }
-    responseInfo.success = false;
     return Future.value(responseInfo);
   }
 

@@ -294,24 +294,23 @@ class _LoginPageState extends State<LoginPage> {
       "password": userPsw,
     };
 
-    // ResponseInfo responseInfo = await DioUtils.instance.postRequest(
-    //   url: HttpHelper.login,
-    //   formDataMap: map,
-    // );
-    // 模拟登录成功
-    ResponseInfo responseInfo = await Future.delayed(
-      Duration(milliseconds: 1000),
-      () {
-        return ResponseInfo(
-          data: {
-            "mobile": "测试数据",
-            "password": 12345678,
-          },
-        );
-      },
+    ResponseInfo responseInfo = await DioUtils.instance.postRequest(
+      url: HttpHelper.login,
+      queryParameters: map,
     );
+    // 模拟登录成功
+    // ResponseInfo responseInfo = await Future.delayed(
+    //   Duration(milliseconds: 1000),
+    //   () {
+    //     return ResponseInfo(
+    //       data: {
+    //         "mobile": "测试数据",
+    //         "password": 12345678,
+    //       },
+    //     );
+    //   },
+    // );
 
-    // 响应成功
     if (responseInfo.success) {
       // 解析数据
       UserBean userBean = UserBean.fromMap(responseInfo.data);
