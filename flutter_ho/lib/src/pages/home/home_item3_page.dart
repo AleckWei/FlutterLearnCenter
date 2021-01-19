@@ -18,6 +18,8 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _pageIndex = 1;
+    _pageSize = 2;
     // 在初始化页面时，先拉取一下数据
     loadingNetData();
   }
@@ -52,8 +54,8 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
     );
   }
 
-  int _pageIndex = 1;
-  int _pageSize = 10;
+  int _pageIndex;
+  int _pageSize;
 
   // 模拟加载网络资源里的artBean数据
   Future loadingNetData() async {
@@ -75,16 +77,17 @@ class _HomeItem3PageState extends State<HomeItem3Page> {
     //   return ResponseInfo(data: ListViewData);
     // });
 
+    pageMap['pageIndex'] = _pageIndex + 1;
+
     if (responseInfo.success) {
-      LogUtils.e('page页面获取到数据：' + responseInfo.data.toString());
-      LogUtils.e('数据类型是：${responseInfo.data.runtimeType}');
-      // List list = responseInfo.data.toList();
+      // 获取到的数据是一个list类型
       List<dynamic> list = responseInfo.data;
-      LogUtils.e(list.toString());
       // 清空一下数组
       _artBeanList = [];
+      // 循环遍历请求到的数组，结果解析成一个个ArtBean
       list.forEach((element) {
         ArtBean artBean = new ArtBean.fromMap(element);
+        // 解析的ArtBean存储到构建ListView的列表当中
         _artBeanList.add(artBean);
       });
       setState(() {});

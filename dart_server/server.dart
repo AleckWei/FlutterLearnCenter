@@ -6,6 +6,7 @@ import 'src.dart';
 String HOST = '172.28.4.154';
 int PORT = 8099;
 
+List<String> _queryList = new List();
 main(List<String> args) async {
   var requestServer = await HttpServer.bind(HOST, PORT);
   print('服务正在${PORT}端口上运行');
@@ -39,10 +40,14 @@ void handleGetMethod(HttpRequest request) {
   }
 
   print('接口名称：' + interface);
+  String queryParameters = request_str.substring(request_str.indexOf('?') + 1);
+  _queryList = [];
+  queryParametersPharse(queryParameters);
+  print('参数列表' + _queryList.toString());
 
   String response_res = '{"code" : 404 , "message" : "暂时没有找到资源"}';
   if (interface == 'article') {
-    response_res = getArticleMethod();
+    response_res = getArticleMethod(_queryList);
   }
 
   request.response
@@ -59,6 +64,11 @@ void handlePostMethod(HttpRequest request) {
   String interface = request_str.substring(1, request_str.indexOf('?'));
   print('接口名称：' + interface);
 
+  String queryParameters = request_str.substring(request_str.indexOf('?') + 1);
+  _queryList = [];
+  queryParametersPharse(queryParameters);
+  print('参数列表' + _queryList.toString());
+
   String response_res = '{"code" : 404 , "message" : "暂时没有找到资源"}';
   if (interface == 'login') {
     response_res = doLogin(request_str);
@@ -70,28 +80,64 @@ void handlePostMethod(HttpRequest request) {
 }
 
 String doLogin(String request_str) {
-  String userName = request_str.substring(0, request_str.indexOf('&'));
-  String pwd = request_str.substring(request_str.indexOf('&') + 1);
+  String key;
+  String val;
+  Map<String, dynamic> queryMap = new Map();
+  _queryList.forEach((element) {
+    key = element.substring(0, element.indexOf('='));
+    val = element.substring(element.indexOf('=') + 1);
+    queryMap[key] = val;
+  });
 
-  String userName_str = userName.substring(userName.indexOf('=') + 1);
-  String pwd_str = pwd.substring(pwd.indexOf('=') + 1);
-
-  print('用户名：${userName_str},密码：${pwd_str}');
+  print('用户名：${queryMap["mobile"]},密码：${queryMap["password"]}');
 
   String response_res;
-  if (userName_str == '13622962185' && pwd_str == '123456') {
+  if (queryMap["mobile"] == '13622962185' && queryMap["password"] == '123456') {
     response_res =
         '{"code" : 200,"data" : {"userName" : "wwj" , "age" : 18 },"message":""}';
   } else {
     response_res = '{"code" : 403,"data" : "","message":"账号或者密码有误！"}';
   }
+  return response_res;
+}
+
+String getArticleMethod(List<String> list) {
+  String response_res;
+  if (list == null || list.length == 0) {
+    response_res = '{"code" : 403,"data" : "","message":"请求参数不全"}';
+  } else {
+    Map<String, int> queryMap = new Map();
+    String key;
+    int val;
+    list.forEach((element) {
+      key = element.substring(0, element.indexOf('='));
+      val = (int) element.substring(element.indexOf('=') + 1);
+      queryMap[key] = val;
+    });
+    response_res = '{"code" : 200,"data" : ' +
+        json.encode(ListViewData[queryMap[key]]) +
+        ',"message":""}';
+    // print('回复数据：' + response_res);
+  }
 
   return response_res;
 }
 
-String getArticleMethod() {
-  String response_res =
-      '{"code" : 200,"data" : ' + json.encode(ListViewData) + ',"message":""}';
-  print('回复数据：' + response_res);
-  return response_res;
+void queryParametersPharse(String queryParameters) {
+  String queryStr;
+  int indexOfEnd = queryParameters.indexOf('&');
+  if (indexOfEnd != -1) {
+    queryStr = queryParameters.substring(0, indexOfEnd);
+    if (queryStr.contains('=')) {
+      _queryList.add(queryStr);
+    }
+    String nextQueryStr = queryParameters.substring(indexOfEnd + 1);
+    queryParametersPharse(nextQueryStr);
+  } else {
+    queryStr = queryParameters;
+    if (queryStr.contains('=')) {
+      _queryList.add(queryStr);
+    }
+    return;
+  }
 }
